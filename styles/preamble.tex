@@ -1,0 +1,46 @@
+\usepackage{calc}
+
+% 页面布局
+\usepackage[inner=3.2cm,outer=1.6cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+
+% pdfstartview=FitW 打开pdf时页面自动适配窗口大小
+\usepackage[%
+  breaklinks=true,%
+  colorlinks,%
+  citecolor=blue,%
+  filecolor=blue,%
+  linkcolor=blue,%
+  urlcolor=blue,%
+  bookmarksopen=true%
+  pdfstartview=FitW%
+]{hyperref}
+
+\input{colordef}
+\input{preamble_fig}
+\ifx\fontset\undefined
+\input{preamble_fonts}
+\fi
+\input{preamble_maths}
+%\input{preamble_zh}
+\input{preamble_code}
+
+\usepackage{anyfontsize}
+\usepackage[printwatermark]{xwatermark}
+\newsavebox\wmbox
+\savebox\wmbox{\tikz[color=gray,opacity=0.15]%
+\node{\shortstack{\tiny Luke Huang\\{\fontsize{3}{3}\selectfont lukehuang.ca@me.com}}};}
+
+% 注册商标，版权所有
+\usepackage{textcomp}
+
+% 页眉页脚
+\usepackage{fancyhdr}
+
+% fancy stuff
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{framed}
+
+\usepackage[titles]{tocloft}
+\setcounter{tocdepth}{2}

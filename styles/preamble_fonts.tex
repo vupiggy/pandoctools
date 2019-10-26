@@ -1,0 +1,36 @@
+\usepackage{xeCJK}
+\usepackage{xltxtra} % this package loads fontspec
+\defaultfontfeatures{Mapping=tex-text}
+
+%% Latin
+% \setmainfont[
+%   Path           = fonts/,
+%   BoldFont={cmunbsr.ttf},
+%   ItalicFont={cmunbmo.ttf},
+%   BoldItalicFont={cmunbso.ttf}
+%   % UprightFont    = *-Roman,
+%   % BoldFont       = *-Bold,
+%   % ItalicFont     = *-Italic,
+%   % BoldItalicFont = *-BoldItalic
+% ]{cmunbmr.ttf}
+
+% monspace: especially for code listing
+\setmonofont[
+  Path           = doctools/fonts/,
+  Extension      = .ttf,
+  % UprightFont    = *-Regular,
+  % BoldFont       = *-Bold,
+  % ItalicFont     = *-Italic,
+  % BoldItalicFont = *-BoldItalic,
+  %Scale          = 1.1
+]{Cascadia} % {UbuntuMono} %{fantasquesansmono}
+
+\setCJKmainfont[
+  Path = doctools/fonts/,
+  BoldFont={Hiragino Sans GB W6.ttc}, % {SourceHanSansHWSC-Bold.otf} ,
+  ItalicFont={AdobeKaitiStd-Regular.otf},
+  ItalicFeatures={Scale=1.1},
+]{Hiragino Sans GB W3.ttc} % {SourceHanSansHWSC-Regular.otf} %{SourceHanSerifSC-Regular.otf}
+\setCJKmonofont[
+  Path = doctools/fonts/,
+]{AdobeKaitiStd-Regular.otf}

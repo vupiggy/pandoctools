@@ -1,0 +1,59 @@
+%%% 中文版式
+
+% 中文排版惯例，段首缩进两个字符
+\usepackage{indentfirst}
+% 尺寸设置
+\setlength{\parindent}{2em}
+\linespread{1.4} % 汉字显示不至于太密集
+\addtolength{\parskip}{2ex}
+\addtolength{\voffset}{-0.2in}
+\addtolength{\textheight}{0.8in}
+\addtolength{\footskip}{10pt}
+%\addtolength{\textwidth}{66pt} % 中文版幅不宜过窄
+
+% 个人认为有些中文字体标点符号左右宽度过大
+\xeCJKDeclarePunctStyle {mine}
+{
+  fixed-punct-ratio=nan,
+  fixed-margin-ratio=0.5,
+  mixed-margin-ratio=0.75,
+}
+\xeCJKsetup{PunctStyle=mine}
+\xeCJKsetwidth{ （ ） }{0.6em}
+\xeCJKsetkern{”}{（}{0.3em}
+\xeCJKsetkern{）}{。}{0.3em}
+\xeCJKsetkern{）}{，}{0.3em}
+\CJKsetecglue{\,}
+
+% 标题格式
+\usepackage{titlesec}
+% \titleformat{\section}[block]{\Large\bf}{\S \thesection}{1em}{}
+\titleformat*{\paragraph}{\itshape}
+\titlespacing*{\paragraph} {\parindent}{0.2em}{\baselineskip}
+% \renewcommand{\chaptername}{第\CJKnumber{\thechapter}章}
+% \newcommand{\sectionname}{节}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+
+\usepackage[title]{appendix}
+\newcommand{\sectionbreak}{\clearpage}
+\renewcommand{\appendixname}{附录}
+% \renewcommand{\bibname}{参考文献}
+\renewcommand{\contentsname}{目~录}
+\renewcommand{\listfigurename}{图~目~录}
+\renewcommand{\listtablename}{表~目~录}
+\renewcommand{\indexname}{索~引}
+\renewcommand{\abstractname}{\Large{摘~要}}
+% \nonfrenchspacing
+% \newcommand{\zhem}[1]{\ifnum\spacefactor>1900 {\em #1}\kern0.2em\else \kern0.2em{\em #1}\kern0.2em\fi}
+\newtheorem{theorem}{定理}[section] % Theorem
+\newtheorem{lemma}[theorem]{引理} % Lemma
+\newcounter{ax}[section] % Axiom
+\newtheorem{axiom}[ax]{公设}
+\newtheorem{prop}[theorem]{命题} % Proposition
+\newtheorem{coro}[theorem]{推论} % Corollary
+\newcommand{\zhem}[1]{\kern0.1em{\em {#1}}\kern0.1em}
+\newcommand{\subjectto}{\ \ s.t.\;}
+\renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
+
+\usepackage{diagbox} % 中式表格斜线表头

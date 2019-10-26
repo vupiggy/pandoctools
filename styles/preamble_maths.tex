@@ -1,0 +1,34 @@
+\usepackage{IEEEtrantools}
+\IEEEeqnarraydefcolsep{0}{\leftmargini}
+
+\newcommand{\Eqref}[1]{\raisebox{0.12ex}{\eqref{#1}}}
+\newcommand{\Thref}[1]{\raisebox{0.12ex}{\eqref{#1}}}
+
+\makeatletter % `@' now normal "letter"
+\@addtoreset{equation}{section}
+\makeatother  % `@' is restored as "non-letter"
+%\renewcommand\theequation{\oldstylenums{\thesection}%
+%                   .\oldstylenums{\arabic{equation}}}
+\renewcommand\theequation{{\thesection}-{\arabic{equation}}}
+
+\usepackage{mathtools} % mathtools loads amsmath, use [fleqn] to flush all equations to left
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\newcommand{\envert}[1]{\kern-2pt\left\lvert#1\right\rvert}
+\let\abs=\envert
+\makeatletter
+\newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
+\newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\makeatother
+%\newcommand{\subjectto}[0]{s.t.\enspace}
+\newcommand{\Group}[2]{(#1,#2)}
+\newcommand{\Ring}[2]{(R,#1,#2)}
+\newcommand{\Field}[2]{(F,#1,#2)}
+
+\mathchardef\mhyphen="2D
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
