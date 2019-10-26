@@ -1,0 +1,23 @@
+\def\rad{2cm}
+\begin{tikzpicture}[
+  dot/.style = {circle, fill=black, minimum size=2pt,
+    inner sep=0pt, outer sep=0pt,
+  },
+  Circle/.style = {
+    circle, minimum size=2*\rad, draw,
+  },
+  every node = {draw}
+  ]
+  \coordinate (o) at (0,0);
+  \node (circle)  at (o) [Circle]{};
+  \node (O)       at (o) [dot, label = {left:$O$}]        {};
+  \coordinate (p) at (60:\rad);
+  \node (P)       at (p) [dot, label = {above right:$P$}] {};
+
+  \draw ($ (P)!2.5cm!90:(O) $) -- ($ (P)!2.5cm!270:(O) $);
+  \draw (O) -- (P);
+  \coordinate (p1) at ($(P)+(-30:0.25cm)$);
+  \coordinate (p2) at ($(P)+(-120:0.25cm)$);
+  \coordinate (p3) at ($(p2)+(-30:0.25cm)$);
+  \draw (p1) -- (p3) -- (p2);
+\end{tikzpicture}

@@ -1,0 +1,32 @@
+\def\rad{2cm}
+\begin{tikzpicture}[
+    dot/.style = {circle, fill=black, minimum size=2pt,
+      inner sep=0pt, outer sep=0pt,
+    },
+    Circle/.style = {
+      circle, minimum size=2*\rad, draw,
+    },
+    every node = {draw},
+  ]
+
+  \coordinate (o) at (0,0);
+  \coordinate (a) at (-130:\rad);
+  \coordinate (b) at (-50:\rad);
+  \coordinate (c) at (80:\rad);
+  \coordinate (d) at (10:\rad);
+
+  \node (circle)  at (o) [Circle]{};    
+  \node (O)       at (o) [dot, label = {left:$O$}]        {};
+  \node (A)       at (a) [dot, label = {below left:$A$}]  {};
+  \node (B)       at (b) [dot, label = {below right:$B$}] {};
+  \node (C)       at (c) [dot, label = {above right:$C$}] {};
+  \node (D)       at (d) [dot, label = {above right:$D$}] {};
+  
+  \draw (a) -- (o) -- (b) 
+  pic["$\alpha$", draw=black, angle eccentricity=1.6, angle radius=0.15*\rad] {angle=A--O--B} -- cycle;
+  \draw (a) [dashed] -- (c) [dashed] -- (b) 
+  pic["$\beta$", draw=black, solid, angle eccentricity=1.7, angle radius=0.2*\rad] {angle=A--C--B} -- cycle;
+  \draw (a) [dashed] -- (d) [dashed] -- (b) 
+  pic["$\gamma$", draw=black, solid, angle eccentricity=1.7, angle radius=0.2*\rad] {angle=A--D--B} -- cycle;
+
+\end{tikzpicture}

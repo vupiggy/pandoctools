@@ -7,9 +7,9 @@ texpdf:	$(TEXPDFTARGETS)
 .PHONY: all pdf html mdpdf texpdf
 
 ifndef DOCTOOLS
-  DOCTOOLS=$(HOME)/Projects/doctools.git
+  DOCTOOLS=$(HOME)/Projects/pandoctools
 endif
-STYLEDIR	=	$(DOCTOOLS)/style
+STYLEDIR	=	$(DOCTOOLS)/styles
 TEXFONTPATH	=	$(DOCTOOLS)/fonts
 TEXINPUTS	=	$${TEXINPUTS}:$(STYLEDIR)
 TEXMDPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble_*.tex)
