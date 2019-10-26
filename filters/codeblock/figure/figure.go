@@ -6,16 +6,6 @@ import (
 	pf "github.com/oltolm/go-pandocfilters"
 )
 
-type Figure struct {
-	Target	string
-	Path	string
-	Caption	interface{}
-	Label	interface{}				// LaTeX only
-	Options	interface{}				// LaTeX only
-	Place	interface{}				// LaTeX only
-	Suffix  map[string]string		// not externally used
-}
-
 var suffixMap = map[string]string{
 	"html":  "svg",
 	"html5": "svg",
@@ -26,6 +16,17 @@ var templateMap = map[string]string{
 	"html":		htmlTemplate,
 	"html5":	htmlTemplate,
 	"latex":	latexTemplate,
+}
+
+//!+ figure
+type Figure struct {
+	Target	string
+	Path	string
+	Caption	interface{}
+	Label	interface{}				// LaTeX only
+	Options	interface{}				// LaTeX only
+	Place	interface{}				// LaTeX only
+	Suffix  map[string]string		// not externally used
 }
 
 const latexTemplate = `
