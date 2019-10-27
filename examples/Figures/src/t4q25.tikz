@@ -1,0 +1,19 @@
+\begin{tikzpicture}[%
+  ball/.style = {
+    circle, minimum size=20pt, draw=black, densely dotted,
+    inner sep=0pt, outer sep=0pt,
+  },
+  every node/.style = {inner sep=0pt, outer sep=0pt}
+]
+
+  \draw (4,0) arc (0:-180:4cm);
+  \draw [densely dotted] (4cm-10pt,0) arc (0:-180:4cm-10pt);
+
+  \node at (4, 0) [ball, anchor=east, solid] {};
+  \node at (4cm-20pt-10pt, 0) {$5$};
+
+  \foreach \n in {1, 2, 3, 4} {
+    \node at ({(\n-5) * 45}:4cm-10pt)      [ball]{};
+    \node at ({(\n-5) * 45}:4cm-10pt-20pt) []{$\n$};
+  }
+\end{tikzpicture}

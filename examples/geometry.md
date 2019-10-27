@@ -51,3 +51,7 @@ Figures/tangent_line
 ```{.figure caption="Inscribed Angle and Central Angle" label="insc" options="scale=1"}
 Figures/inscribed_angle
 ```
+
+```{.figure caption="Test4 Q25" label="t4q25"}
+Figures/t4q25
+```

@@ -47,11 +47,16 @@ endif
 	 done
 
 ### Markdown
-FIGURESTIKZ=$(foreach fig, $(FIGURES_PDF), Figures/src/$(fig).tikz)
-Figures: $(FIGURESTIKZ)
+FIGURESDIR=Figures
+FIGURES=$(foreach fig, $(FIGURES_PDF), $(FIGURESDIR)/$(fig))
+FIGURESRC=$(foreach fig, $(FIGURES_PDF), $(FIGURESDIR)/src/$(fig:.pdf=.tikz))
+$(FIGURES): $(FIGURESRC)
 	@make -C Figures/ ALL TEXINPUTS=$(TEXINPUTS) DEBUG=$(DEBUG) DOCTOOLS=$(DOCTOOLS)
 
-%.md.pdf: $(MDPARTS) $(TEXMDPREAMBLES) Figures
+Figures:$(FIGURESRC)
+	@make -C Figures/ ALL TEXINPUTS=$(TEXINPUTS) DEBUG=$(DEBUG) DOCTOOLS=$(DOCTOOLS)
+
+%.md.pdf: $(MDPARTS) $(TEXMDPREAMBLES) $(FIGURES)
 	@printf "%-12s %s\n" "Generating" $@
 	@TEXINPUTS=$(TEXINPUTS)							\
 		pandoc $(EXTRAARGS)						\
@@ -61,8 +66,7 @@ Figures: $(FIGURESTIKZ)
 		-V fontpath="$(TEXFONTPATH)/"					\
 		--template=$(TEXTEMPLATE) $(MDPARTS) -o $@ $(OUTPUT)
 
-%.html : $(MDPARTS) $(HTMLSTYLES) $(foreach fig, $(FIGURES_SVG), Figures/$(fig))
-	@make -C Figures/ ALL TEXINPUTS=$(TEXINPUTS) DEBUG=$(DEBUG) DOCTOOLS=$(DOCTOOLS)
+%.html : $(MDPARTS) $(HTMLSTYLES) $(FIGURES)
 	@printf "%-12s %s\n" "Generating" $@
 	@pandoc $(EXTRAARGS)							\
 		--katex								\
