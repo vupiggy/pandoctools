@@ -16,7 +16,7 @@ TEXMDPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble_*.tex)
 TEXPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble*.tex)
 TEXTEMPLATE	=	$(STYLEDIR)/md2pdf_template.tex
 HTMLSTYLES	=	$(wildcard $(STYLEDIR)/*.css)
-HTML5TEMPLATE	=	/Users/luke/Projects/pandoc-amsthm/template/pandoc-amsthm.html5
+HTML5TEMPLATE	=	$(STYLEDIR)/tufte.html5
 HTMLCMDCSS	=	$(foreach css, $(HTMLSTYLES), --css $(css))
 
 clean:

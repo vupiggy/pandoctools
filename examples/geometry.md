@@ -52,6 +52,6 @@ Figures/tangent_line
 Figures/inscribed_angle
 ```
 
-```{.figure caption="Test4 Q25" label="t4q25"}
+```{.figure caption="Test4 Q25" label="t4q25" options="width=0.67\textwidth"}
 Figures/t4q25
 ```
