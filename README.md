@@ -27,7 +27,8 @@ PANDOCFILTERS	=	$(HOME)/Projects/pandoctools/filters/codeblock/codeblock-filter
 include $(DOCTOOLS)/make/Makefile.in
 ```
 
-Markdown files in `examples` directory shows how to insert code snippet, figures, and `amsthm` style theorems in the document.
+Markdown file `geometry.md` in `examples` directory show
+how to insert code snippet, figures, and `amsthm` style theorems in the document.
 
 ## Make
 
@@ -37,10 +38,15 @@ that can be inserted into PDF or HTML repectively.
 
 ## Styles
 
+CSS for HTML, LaTeX templates and configuration for PDF are in `styles` directory.
+
 ## Fonts
 
-The users will have to put their own fonts in `fonts` directory since
+The users will have to put their own fonts in `fonts` directory or somewhere else since
 almost all fonts are licensed so that can not be provided in an open sourced project.
-The users might need to modify `styles/md2pdf_template.tex` to use their favorite fonts for PDF output.
+To set font path other than `fonts`, 
+modify `TEXFONTPATH` variable in `make/Makefile.in` properly.
+The users might also need to modify `styles/md2pdf_template.tex` 
+to use their favorite fonts for PDF output.
 See [fontspec](https://ctan.org/pkg/fontspec?lang=en) for more details.
-It's unlikely the users need to do anything with HTML output.
+It's likely that the users need to do nothing for HTML output.
