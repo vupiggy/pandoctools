@@ -12,9 +12,9 @@ import (
 	pf "github.com/oltolm/go-pandocfilters"
 )
 
-func Insert(cb codeblock.CodeBlock, class string, target string, content string) interface{} {
+func Insert(cb codeblock.CodeBlock, target string, content string) interface{} {
 	if cb != nil {
-		return cb.Block(class, target, content)
+		return cb.Block(target, content)
 	}
 	return nil
 }
@@ -39,7 +39,7 @@ func processCB(key string, value interface{}, target string, meta interface{}) i
 		if len(classes) > 0 {
 			t := cbMap[classes[0].(string)]
 			if t != nil {
-				return Insert(cbMap[classes[0].(string)], classes[0].(string), target, content)
+				return Insert(cbMap[classes[0].(string)], target, content)
 			}
 		}
 	}

@@ -50,7 +50,7 @@ const htmlTemplate = `
 </figure>
 `
 
-func (figure *Figure) Block(class string, target string, content string) interface{} {
+func (figure *Figure) Block(target string, content string) interface{} {
 	var tpl *template.Template
 	var err error
 	var output bytes.Buffer

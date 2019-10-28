@@ -21,7 +21,7 @@ type Code struct {
 	Segment  string `json:segment`
 }
 
-func (c *Code) Block(class string, target string, content string) interface{} {
+func (c *Code) Block(target string, content string) interface{} {
 	var code Code
 	err := json.Unmarshal([]byte(content), &code); if err != nil {
 		return nil

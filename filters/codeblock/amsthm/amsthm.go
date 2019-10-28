@@ -35,7 +35,7 @@ const htmlTemplate = `
 </div>
 `
 
-func (theorem *Theorem) Block(class string, target string, content string) interface{} {
+func (theorem *Theorem) Block(target string, content string) interface{} {
 	var tpl *template.Template
 	var output bytes.Buffer
 	var thm Theorem
