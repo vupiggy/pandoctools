@@ -38,7 +38,7 @@ that can be inserted into PDF or HTML repectively.
 
 ## Styles
 
-CSS for HTML, LaTeX templates and configuration for PDF are in `styles` directory.
+CSS for HTML, LaTeX templates and configuration for PDF are in [`styles`](styles) directory.
 
 ## Fonts
 
