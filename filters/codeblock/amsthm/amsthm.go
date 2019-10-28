@@ -6,6 +6,7 @@ package amsthm
 
 import (
 	"bytes"
+	"encoding/json"
 	"text/template"
 	pf "github.com/oltolm/go-pandocfilters"
 )
@@ -17,39 +18,33 @@ var templateMap = map[string]string{
 }
 
 type Theorem struct {
-	Type	interface{}
-	Item	interface{}
-	Content	string
+	Type	string `json:type`
+	Item	string `json:item`
+	Text	string `json:text`
 }
 
 const latexTemplate = `
 \begin{{"{"}}{{.Type}}{{"}"}}[{{.Item}}]
-{{.Content}}
+{{.Text}}
 \end{{"{"}}{{.Type}}{{"}"}}
 `
 
 const htmlTemplate = `
 <div class="{{.Type}}">
-({{.Item}}) {{.Content}}
+({{.Item}}) {{.Text}}
 </div>
 `
 
-func (theorem *Theorem) Block(class string, target string, content string, keyvals []interface{}) interface{} {
+func (theorem *Theorem) Block(class string, target string, content string) interface{} {
 	var tpl *template.Template
-	var err error
 	var output bytes.Buffer
-	thm := Theorem{
-		Content: content,
-	}
-	if len(keyvals) > 0 {
-		thm.Type, keyvals	= pf.GetValue(keyvals, "type")
-		thm.Item, keyvals	= pf.GetValue(keyvals, "item")
+	var thm Theorem
+	err := json.Unmarshal([]byte(content), &thm); if err != nil {
+		return nil
 	}
 	tpl, err = template.New("theorem").
-		Funcs(template.FuncMap{
-		"stringify": func (x interface{}) string { return x.(string) }}).
 			Parse(templateMap[target]); if err != nil {
-			return ""
+			return nil
 		}
 	tpl.Execute(&output, thm)
 	return pf.RawBlock(target, output.String())
