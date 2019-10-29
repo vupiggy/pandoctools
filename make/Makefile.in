@@ -34,7 +34,7 @@ distclean:
 ifeq ($(DEBUG), y)
   OUTPUT=--verbose
 else
-  OUTPUT=>&/dev/null
+  OUTPUT=>/dev/null 2>&1
 endif
 
 ### TeX

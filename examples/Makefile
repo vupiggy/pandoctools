@@ -1,5 +1,5 @@
 DOCTOOLS	=	$(HOME)/Projects/pandoctools
-PANDOCFILTERS	=	$(HOME)/Projects/pandoctools/filters/codeblock/codeblock-filter
+PANDOCFILTERS	=	$(DOCTOOLS)/filters/codeblock/codeblock-filter
 
 MDPARTS		=	notes.md geometry.md
 MDPDFTARGETS	=	notes.md.pdf
