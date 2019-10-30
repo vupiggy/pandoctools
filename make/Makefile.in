@@ -69,7 +69,7 @@ Figures:$(FIGURESRC)
 %.html : $(MDPARTS) $(HTMLSTYLES) $(FIGURES)
 	@printf "%-12s %s\n" "Generating" $@
 	@pandoc $(EXTRAARGS)							\
-		--katex								\
+		--katex=https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/		\
 		--toc --toc-depth=2						\
 		--wrap=preserve							\
 		--listings							\

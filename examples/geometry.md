@@ -110,3 +110,15 @@ You get `the figure below`{=html}`Figure~\ref{fig:t4q25}`{=latex}:
     "place"   : "ht"
 }
 ```
+
+# $\LaTeX$ example
+
+$\LaTeX$ is great!
+
+$$
+\begin{aligned}
+  f(x) &= x^2\\
+  g(x) &= \frac{1}{x}\\
+  F(x) &= \int^a_b \frac{1}{3}x^3
+\end{aligned}
+$$
