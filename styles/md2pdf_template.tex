@@ -4,17 +4,6 @@
 \usepackage{xltxtra} % this package loads fontspec
 \defaultfontfeatures{Mapping=tex-text}
 
-%% Latin
-% \setmainfont[
-%   Path           = fonts/,
-%   BoldFont={cmunbsr.ttf},
-%   ItalicFont={cmunbmo.ttf},
-%   BoldItalicFont={cmunbso.ttf}
-%   % UprightFont    = *-Roman,
-%   % BoldFont       = *-Bold,
-%   % ItalicFont     = *-Italic,
-%   % BoldItalicFont = *-BoldItalic
-% ]{cmunbmr.ttf}
 \setmainfont{Palatino}
 
 % pandoc doesn't substitude variable recursively,
@@ -51,6 +40,10 @@ $endif$
   ItalicFont     = AdobeKaitiStd-Regular.otf,
 ]{AdobeKaitiStd-Regular.otf}
 \def\fontset{true}
+
+$if(zh)$
+\def\zh{true}
+$endif$
 
 \input{preamble}
 $if(highlighting-macros)$

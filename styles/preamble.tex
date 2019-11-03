@@ -22,7 +22,9 @@
 \input{preamble_fonts}
 \fi
 \input{preamble_maths}
-%\input{preamble_zh}
+\ifdefined\zh
+\input{preamble_zh}
+\fi
 \input{preamble_code}
 
 \usepackage{anyfontsize}

@@ -15,7 +15,6 @@ RUN apt-get -yq update &&                                               \
         texlive-xetex                                                   \
         texlive-bibtex-extra                                            \
         pandoc                                                          \
-        node-katex                                                      \
         make &&                                                         \
     apt-get -yq autoremove &&                                           \
     apt-get clean -y &&                                                 \

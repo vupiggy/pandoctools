@@ -85,19 +85,19 @@ Figures:$(FIGURESRC)
 %.pdf: src/%.tikz
 	@printf "%-12s %s\n" "Tikzing " $<
 	@tikzfile=$<; texfile=$${tikzfile%%.tikz}.tex; tikzfile=`basename $<`;		\
-	 printf "\documentclass[tikz, border=10pt]{standalone}\n\n"	>$${texfile};	\
-	 printf "\usetikzlibrary{calc,quotes,angles}\n"			>>$${texfile};	\
-	 printf "\usepackage{amsthm}\n"					>>$${texfile};	\
-	 printf "\usepackage{tkz-euclide}\n"				>>$${texfile};	\
-	 printf "\usetkzobj{all}\n"					>>$${texfile};	\
-	 printf "\usepackage{fontspec}\n"				>>$${texfile};	\
-	 printf "\usepackage{xcolor}\n"					>>$${texfile};	\
+	 printf "\\\documentclass[tikz, border=10pt]{standalone}\n\n"	>$${texfile};	\
+	 printf "\\\usetikzlibrary{calc,quotes,angles}\n"		>>$${texfile};	\
+	 printf "\\\usepackage{amsthm}\n"				>>$${texfile};	\
+	 printf "\\\usepackage{tkz-euclide}\n"				>>$${texfile};	\
+	 printf "\\\usetkzobj{all}\n"					>>$${texfile};	\
+	 printf "\\\usepackage{fontspec}\n"				>>$${texfile};	\
+	 printf "\\\usepackage{xcolor}\n"				>>$${texfile};	\
 	 printf "\\\begin{document}\n"					>>$${texfile};	\
-	 printf "\input{$${tikzfile}}\n"				>>$${texfile};	\
+	 printf "\\\input{$${tikzfile}}\n"				>>$${texfile};	\
 	 printf "\\\end{document}\n\n"					>>$${texfile};	\
 	 TEXINPUTS=$(TEXINPUTS):$(TEXEXTRAINPUTS)					\
 	 lualatex -interaction=nonstopmode -output-directory=./ $${texfile} $(OUTPUT)
 
 %.svg: %.pdf
 	@printf "%-12s %-20s to SVG\n" "Exporting" "$^"
-	@pdf2svg $^ $@
+	@pdf2svg $< $@

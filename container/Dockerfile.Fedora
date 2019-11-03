@@ -1,0 +1,39 @@
+FROM registry.fedoraproject.org/f31/fedora-toolbox:latest
+MAINTAINER Luke Huang <lukehuang.ca@me.com>
+
+RUN dnf -y update && dnf -y install vim emacs make pandoc pdf2svg
+
+# Install TeXLive
+COPY texlive.profile /root/texlive.profile
+
+WORKDIR /root
+
+RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz     &&      \
+    mkdir ./install-tl                                                          &&      \
+    tar --strip-components 1 -zvxf install-tl-unx.tar.gz -C "./install-tl"      &&      \
+    ./install-tl/install-tl --profile=./texlive.profile
+
+# Install extra TeXLive packages
+RUN tlmgr install standalone            \
+                  luatex85              \
+                  capt-of               \
+                  tkz-base              \
+                  tkz-euclide           \
+                  numprint              \
+                  xstring               \
+                  pgfopts               \
+                  flowchart             \
+                  makeshape             \
+                  IEEEtran              \
+                  anyfontsize           \
+                  xwatermark            \
+                  framed                \
+                  tocloft               \
+                  catoptions            \
+                  ltxkeys               \
+                  rsfs                  \
+                  titlesec              \
+                  diagbox               \
+                  appendix              \
+                  pict2e
+                  
