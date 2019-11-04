@@ -35,5 +35,6 @@ RUN tlmgr install standalone            \
                   titlesec              \
                   diagbox               \
                   appendix              \
-                  pict2e
-                  
+                  pict2e                \
+                  was
+                                    

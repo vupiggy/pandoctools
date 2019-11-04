@@ -39,10 +39,12 @@ endif
 
 ### TeX
 %.tex.pdf: %.tex $(TEXPREAMBLES)
-	@echo "TeXing" $< "2 times..."
+	@echo "TeXing" $< "3 times..."
 	@set -e; \
 	 for i in {1..3}; do echo "TeXing $$i";									\
-		xelatex -halt-on-error -shell-escape -interaction=batchmode -jobname=$(@:.pdf=) $< $(OUTPUT)	\
+		TEXINPUTS=$${TEXINPUTS}:$(TEXINPUTS)								\
+		xelatex -halt-on-error -shell-escape -interaction=batchmode -jobname=$(@:.pdf=) 		\
+		"$(EXTRATEXARGS) \input{$<}" $(OUTPUT)								\
 		|| (echo "Failed...exit"; exit 1);								\
 	 done
 

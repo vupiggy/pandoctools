@@ -4,42 +4,9 @@
 \usepackage{xltxtra} % this package loads fontspec
 \defaultfontfeatures{Mapping=tex-text}
 
-\setmainfont{Palatino}
-
-% pandoc doesn't substitude variable recursively,
-% we have to do it in the root template file.
-% monspace: especially for code listing
-%
-% Cascadia looks good, but can not be copied correctly from the generated PDF
-\setmonofont[
-% For pandoc
 $if(fontpath)$
-  Path           = $fontpath$,
+\def\fontpath{$fontpath$}
 $endif$
-  % Extension      = .ttf,
-  UprightFont    = *-Regular,
-  BoldFont       = *-Bold,
-  ItalicFont     = *-Italic,
-  BoldItalicFont = *-BoldItalic,
-  %Scale          = 1.1
-]{UbuntuMono} %{fantasquesansmono}
-
-\setCJKmainfont[
-% For pandoc
-$if(fontpath)$
-  Path           = $fontpath$,
-$endif$
-  BoldFont={Hiragino Sans GB W6.ttc}, % {SourceHanSansHWSC-Bold.otf} ,
-  ItalicFont={AdobeKaitiStd-Regular.otf},
-  ItalicFeatures={Scale=1.08},
-]{Hiragino Sans GB W3.ttc} % {SourceHanSansHWSC-Regular.otf} %{SourceHanSerifSC-Regular.otf}
-\setCJKmonofont[
-$if(fontpath)$
-  Path           = $fontpath$,
-$endif$
-  ItalicFont     = AdobeKaitiStd-Regular.otf,
-]{AdobeKaitiStd-Regular.otf}
-\def\fontset{true}
 
 $if(zh)$
 \def\zh{true}

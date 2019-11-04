@@ -32,6 +32,7 @@
 \titlespacing*{\paragraph} {\parindent}{0.2em}{\baselineskip}
 % \renewcommand{\chaptername}{第\CJKnumber{\thechapter}章}
 % \newcommand{\sectionname}{节}
+
 \renewcommand{\figurename}{图}
 \renewcommand{\tablename}{表}
 
@@ -56,4 +57,5 @@
 \newcommand{\subjectto}{\ \ s.t.\;}
 \renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
 
-\usepackage{diagbox} % 中式表格斜线表头
+%%% TODO(luke): confict with \arc macro defined in preamble_maths.tex
+% \usepackage{diagbox} % 中式表格斜线表头

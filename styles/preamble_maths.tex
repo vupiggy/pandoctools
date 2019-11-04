@@ -11,6 +11,7 @@
 %                   .\oldstylenums{\arabic{equation}}}
 \renewcommand\theequation{{\thesection}-{\arabic{equation}}}
 
+\usepackage{gensymb}
 \usepackage{mathtools} % mathtools loads amsmath, use [fleqn] to flush all equations to left
 \usepackage{amsthm}
 \usepackage{amsfonts}
@@ -32,3 +33,7 @@
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 %\newtheorem{theorem}{Theorem}[section]
+
+\newcommand{\arc}[1]{{%
+  \setbox9=\hbox{#1}%
+  \ooalign{\resizebox{\wd9}{\height}{\texttoptiebar{\phantom{A}}}\cr#1}}}
