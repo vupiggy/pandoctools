@@ -20,7 +20,7 @@ HTML5TEMPLATE	=	$(STYLEDIR)/tufte.html5
 HTMLCMDCSS	=	$(foreach css, $(HTMLSTYLES), --css $(css))
 
 clean:
-	@[ -d Figures ] && (set -x; make -C Figures/ CLEAN DOCTOOLS=$(DOCTOOLS))
+	@[ -d Figures ] && make -C Figures/ CLEAN DOCTOOLS=$(DOCTOOLS)
 	@echo "RM pdf html"
 	@rm -f *.html *.pdf *.d
 
