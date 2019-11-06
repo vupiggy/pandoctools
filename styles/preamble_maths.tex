@@ -17,6 +17,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{mathrsfs}
+\usepackage{fourier}
 \newcommand{\envert}[1]{\kern-2pt\left\lvert#1\right\rvert}
 \let\abs=\envert
 \makeatletter
@@ -30,10 +31,24 @@
 
 \mathchardef\mhyphen="2D
 
+\ifx\zh\undefined
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
-%\newtheorem{theorem}{Theorem}[section]
+\newtheorem{theorem}{Theorem}[section]
+\fi
 
 \newcommand{\arc}[1]{{%
   \setbox9=\hbox{#1}%
   \ooalign{\resizebox{\wd9}{\height}{\texttoptiebar{\phantom{A}}}\cr#1}}}
+
+\everymath{\displaystyle}
+
+\makeatletter
+\newcommand{\slantparallel}{\mathrel{\mathpalette\new@parallel\relax}}
+\newcommand{\new@parallel}[2]{%
+  \begingroup
+  \sbox\z@{$#1T$}% get the height of an uppercase letter
+  \resizebox{!}{\ht\z@}{\raisebox{\depth}{$\m@th#1/\mkern-5mu/$}}%
+  \endgroup
+}
+\makeatother

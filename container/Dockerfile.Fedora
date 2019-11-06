@@ -36,5 +36,7 @@ RUN tlmgr install standalone            \
                   diagbox               \
                   appendix              \
                   pict2e                \
-                  was
+                  was                   \
+                  fourier               \
+                  utopia
                                     

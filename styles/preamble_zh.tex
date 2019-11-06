@@ -24,6 +24,7 @@
 \xeCJKsetkern{）}{。}{0.3em}
 \xeCJKsetkern{）}{，}{0.3em}
 \CJKsetecglue{\,}
+\newcommand{\zhem}[1]{\kern0.1em{\em {#1}}\kern0.1em}
 
 % 标题格式
 \usepackage{titlesec}
@@ -48,12 +49,13 @@
 % \nonfrenchspacing
 % \newcommand{\zhem}[1]{\ifnum\spacefactor>1900 {\em #1}\kern0.2em\else \kern0.2em{\em #1}\kern0.2em\fi}
 \newtheorem{theorem}{定理}[section] % Theorem
-\newtheorem{lemma}[theorem]{引理} % Lemma
+\newtheorem{lemma}{引理}[theorem] % Lemma
 \newcounter{ax}[section] % Axiom
 \newtheorem{axiom}[ax]{公设}
-\newtheorem{prop}[theorem]{命题} % Proposition
-\newtheorem{coro}[theorem]{推论} % Corollary
-\newcommand{\zhem}[1]{\kern0.1em{\em {#1}}\kern0.1em}
+\newtheorem{prop}{命题}[section] % Proposition
+\newtheorem{coro}{推论}[theorem] % Corollary
+\renewcommand*{\qedsymbol}{\emph{【证毕】}}
+\newtheorem{definition}{定义}[section]
 \newcommand{\subjectto}{\ \ s.t.\;}
 \renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
 
