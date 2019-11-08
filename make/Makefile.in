@@ -56,7 +56,7 @@ input_tex=									\
                     }								\
                 }' $1)
 
-master_tex=$(TEXPDFTARGETS:.pdf="")
+master_tex=$(TEXPDFTARGETS:.pdf=)
 
 tex := $(call input_tex,$(master_tex))
 tex += $(call input_tex,$(tex))
@@ -64,7 +64,7 @@ tex += $(call input_tex,$(tex))
 	@echo "Generate depenent inputs"
 	@echo "$(<:.tex=.tex.pdf) $(<:.tex=.d): $< $(tex) $(src)" >$@
 
--include $(master_tex:.tex=.d)
+include $(master_tex:.tex=.d)
 
 #%.tex.pdf: %.tex $(TEXPARTS) $(TEXPREAMBLES)
 %.tex.pdf: %.tex $(TEXPREAMBLES)
