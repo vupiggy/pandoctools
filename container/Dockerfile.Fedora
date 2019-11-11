@@ -1,7 +1,7 @@
 FROM registry.fedoraproject.org/f31/fedora-toolbox:latest
 MAINTAINER Luke Huang <lukehuang.ca@me.com>
 
-RUN dnf -y update && dnf -y install vim emacs make pandoc pdf2svg
+RUN dnf -y update && dnf -y install vim emacs make pandoc pdf2svg poppler-utils
 
 # Install TeXLive
 COPY texlive.profile /root/texlive.profile
@@ -38,5 +38,8 @@ RUN tlmgr install standalone            \
                   pict2e                \
                   was                   \
                   fourier               \
-                  utopia
+                  utopia                \
+                  listofitems           \
+                  readarray             \
+                  verbatimbox
                                     

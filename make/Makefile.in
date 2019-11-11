@@ -10,7 +10,9 @@ ifndef DOCTOOLS
   DOCTOOLS=$(HOME)/Projects/pandoctools
 endif
 STYLEDIR	=	$(DOCTOOLS)/styles
+ifndef TEXFONTPATH
 TEXFONTPATH	=	$(DOCTOOLS)/fonts
+endif
 TEXINPUTS	=	$${TEXINPUTS}:$(STYLEDIR)
 TEXMDPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble_*.tex)
 TEXPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble*.tex)
@@ -95,7 +97,7 @@ Figures:$(FIGURESRC)
 		--pdf-engine-opt="-shell-escape"				\
 		--listings							\
 		-V fontpath="$(TEXFONTPATH)/"					\
-		--template=$(TEXTEMPLATE) $(MDPARTS) -o $@ $(OUTPUT)
+		--template=$(TEXTEMPLATE) $(MDPARTS) -o $(OUTDIR)$@ $(OUTPUT)
 
 %.html : $(MDPARTS) $(HTMLSTYLES) $(FIGURES)
 	@printf "%-12s %s\n" "Generating" $@
