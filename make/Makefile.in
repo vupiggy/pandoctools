@@ -39,7 +39,7 @@ else
   OUTPUT=>/dev/null 2>&1
 endif
 
-### TeX
+### TeX documents
 
 ### Dependency ###
 AWK=awk
@@ -79,7 +79,7 @@ include $(master_tex:.tex=.d)
 		|| (echo "Failed...exit"; exit 1);								\
 	 done
 
-### Markdown
+### Markdown(Pandoc) documents
 FIGURESDIR=Figures
 FIGURES=$(foreach fig, $(FIGURES_PDF), $(FIGURESDIR)/$(fig))
 FIGURESRC=$(foreach fig, $(FIGURES_PDF), $(FIGURESDIR)/src/$(fig:.pdf=.tikz))
@@ -95,8 +95,9 @@ Figures:$(FIGURESRC)
 		pandoc $(EXTRAARGS)						\
 		--pdf-engine=xelatex						\
 		--pdf-engine-opt="-shell-escape"				\
-		--listings							\
+		$(LISTINGS)							\
 		-V fontpath="$(TEXFONTPATH)/"					\
+		$(RESOURCEPATH)							\
 		--template=$(TEXTEMPLATE) $(MDPARTS) -o $(OUTDIR)$@ $(OUTPUT)
 
 %.html : $(MDPARTS) $(HTMLSTYLES) $(FIGURES)
