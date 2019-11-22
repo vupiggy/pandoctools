@@ -113,7 +113,7 @@ Figures:$(FIGURESRC)
 		--to html5  --template=$(HTML5TEMPLATE)				\
 		$(HTMLCMDCSS)							\
 		--metadata date="`date`"					\
-		--output $@ $(MDPARTS)
+		--output $@ $(MDPARTS) $(OUTPUT)
 
 ### Figures
 %.pdf: src/%.tikz
