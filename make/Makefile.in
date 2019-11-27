@@ -39,7 +39,7 @@ else
   OUTPUT=>/dev/null 2>&1
 endif
 
-### TeX documents
+### LaTeX documents
 
 ### Dependency ###
 AWK=awk
@@ -95,6 +95,7 @@ Figures:$(FIGURESRC)
 		pandoc $(EXTRAARGS)						\
 		--pdf-engine=xelatex						\
 		--pdf-engine-opt="-shell-escape"				\
+		--from markdown+pipe_tables+table_captions			\
 		$(LISTINGS)							\
 		-V fontpath="$(TEXFONTPATH)/"					\
 		$(RESOURCEPATH)							\
@@ -104,7 +105,7 @@ Figures:$(FIGURESRC)
 	@printf "%-12s %s\n" "Generating" $@
 	@pandoc $(EXTRAARGS)							\
 		--katex=https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/		\
-		--toc --toc-depth=2						\
+		--toc --toc-depth=1						\
 		--wrap=preserve							\
 		--listings							\
 		--section-divs							\
@@ -115,7 +116,7 @@ Figures:$(FIGURESRC)
 		--metadata date="`date`"					\
 		--output $@ $(MDPARTS) $(OUTPUT)
 
-### Figures
+### Figures(in TikZ)
 %.pdf: src/%.tikz
 	@printf "%-12s %s\n" "Tikzing " $<
 	@tikzfile=$<; texfile=$${tikzfile%%.tikz}.tex; tikzfile=`basename $<`;		\
@@ -124,7 +125,9 @@ Figures:$(FIGURESRC)
 	 printf "\\\usepackage{amsthm}\n"				>>$${texfile};	\
 	 printf "\\\usepackage{tkz-euclide}\n"				>>$${texfile};	\
 	 printf "\\\usetkzobj{all}\n"					>>$${texfile};	\
-	 printf "\\\usepackage{fontspec}\n"				>>$${texfile};	\
+	 printf "%\\\usepackage[scaled]{helvet}\n"			>>$${texfile};	\
+	 printf "%\\\renewcommand{\\\ttdefault}{lmtt}\n"		>>$${texfile};	\
+	 printf "\\\usepackage[T1]{fontenc}\n"				>>$${texfile};	\
 	 printf "\\\usepackage{xcolor}\n"				>>$${texfile};	\
 	 printf "\\\begin{document}\n"					>>$${texfile};	\
 	 printf "\\\input{$${tikzfile}}\n"				>>$${texfile};	\

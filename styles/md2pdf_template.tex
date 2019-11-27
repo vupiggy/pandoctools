@@ -1,8 +1,4 @@
-\documentclass[11pt,titlepage,twoside]{article}
-
-\usepackage{xeCJK}
-\usepackage{xltxtra} % this package loads fontspec
-\defaultfontfeatures{Mapping=tex-text}
+\documentclass[titlepage,twoside]{article}
 
 $if(fontpath)$
 \def\fontpath{$fontpath$}
@@ -13,6 +9,7 @@ $if(zh)$
 $endif$
 
 \input{preamble}
+
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
@@ -23,7 +20,7 @@ $endif$
 \newcounter{groupdef}
 
 \pagestyle{empty}
-%%% pt Depends on the used fonts 
+%%% pt Depends on the used fonts
 \setlength\cftbeforesecskip{6pt}
 \setlength\cftbeforesubsecskip{6pt}
 \setlength\cftbeforesubsubsecskip{20pt}
