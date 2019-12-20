@@ -89,7 +89,7 @@ endif
 FIGURESRC=$(foreach fig, $(FIGURES_PDF), $(FIGURESDIR)/src/$(fig:.pdf=.tikz))
 
 %.md.pdf: $(MDPARTS) $(TEXMDPREAMBLES) $(FIGURESRC)
-	@make -C $(FIGURESDIR) ALL TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)" DEBUG=$(DEBUG) DOCTOOLS=$(DOCTOOLS)
+	@make -C $(FIGURESDIR) figures TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)" DEBUG=$(DEBUG) DOCTOOLS=$(DOCTOOLS)
 	@printf "%-12s %s\n" "Generating" $@
 	@TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)"					\
 		pandoc $(EXTRAARGS)						\
