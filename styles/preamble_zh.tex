@@ -1,5 +1,19 @@
 %%% 中文版式
 
+\usepackage{xeCJK}
+
+\setCJKmainfont[
+  Path = \fontpath/,
+  BoldFont={Hiragino Sans GB W6.ttc}, % {SourceHanSansHWSC-Bold.otf} ,
+  ItalicFont={AdobeKaitiStd-Regular.otf},
+  ItalicFeatures={Scale=1},
+]{Hiragino Sans GB W3.ttc} % {SourceHanSansHWSC-Regular.otf} %{SourceHanSerifSC-Regular.otf}
+
+\setCJKmonofont[
+  Path = \fontpath/,
+]{AdobeKaitiStd-Regular.otf}
+
+
 % 中文排版惯例，段首缩进两个字符
 \usepackage{indentfirst}
 % 尺寸设置

@@ -240,7 +240,7 @@ figure img {
 figcaption {
     font-size: 0.8em;
     /* font-style: italic; */
-    float: right;
+    /* float: right; */
     clear: right;
     margin-top: 0;
     margin-bottom: 0;

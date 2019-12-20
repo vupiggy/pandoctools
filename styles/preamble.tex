@@ -4,7 +4,7 @@
 \usepackage[inner=3.2cm,outer=1.6cm]{geometry}
 \usepackage[dvipsnames]{xcolor}
 
-% pdfstartview=FitW 打开pdf时页面自动适配窗口大小
+% pdfstartview=FitW % 打开pdf时页面自动适配窗口大小
 \usepackage[%
   breaklinks=true,%
   colorlinks,%
@@ -22,9 +22,9 @@
 \input{preamble_fonts}
 \ifdefined\zh
 \input{preamble_zh}
-% \else
-% \linespread{1.1}
-% \addtolength{\parskip}{0.8ex}
+\else
+\linespread{1.1}
+\addtolength{\parskip}{0.25ex}
 \fi
 \input{preamble_code}
 

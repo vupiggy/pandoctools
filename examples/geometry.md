@@ -1,3 +1,7 @@
+# Hyperlink
+`A reference to the \hyperlink{examplelink}{link} defined later.`{=latex}
+
+
 # Code Snippet Example
 
 ```{.snippet}
@@ -50,7 +54,7 @@
 
 ## Tangent Line
 
-See `the figure below`{=html}`Figure~\ref{fig:tanl}`{=latex},
+See @fig:tanl,
 We have a theorem about tangent line to a circle:
 
 ```{.theorem}
@@ -66,54 +70,69 @@ We have a theorem about tangent line to a circle:
     "path"    : "Figures/tangent_line",
     "caption" : "Tangent line to a circle",
     "label"   : "tanl",
-    "options" : "scale=1",
+    "options" : {"scale" : "0.67"},
     "place"   : "hb"
 }
 ```
 
 ## Inscribed angle and central angle
 
-```{.figure}
-{
-    "path"    : "Figures/inscribed_angle",
-    "caption" : "Inscribed Angle and Central Angle",
-    "label"   : "insc",
-    "options" : "scale=1",
-    "place"   : "hb"
-}
-```
-
-## AMC8
-
 With the code block below:
 
 ```Markdown
     ```{.figure}
     {
-        "path"    : "Figures/t4q25",
-        "caption" : "Test4 Q25",
-        "label"   : "t4q25",
-        "options" : "width=0.67\\textwidth",
+        "path"    : "Figures/inscribed_angle",
+        "caption" : "Inscribed Angle and Central Angle",
+        "label"   : "insc",
+        "options" : {"scale" : "1"},
         "place"   : "ht"
     }
     ```
 ```
 
-You get `the figure below`{=html}`Figure~\ref{fig:t4q25}`{=latex}:
+We get:
+
+```{.figure}
+{
+    "path"    : "Figures/inscribed_angle",
+    "caption" : "Inscribed Angle and Central Angle",
+    "label"   : "insc",
+    "options" : {"scale" : "1"},
+    "place"   : "ht"
+}
+```
+
+## AMC8
+Test 4 Question 25: @fig:t4q25
 
 ```{.figure}
 {
     "path"    : "Figures/t4q25",
     "caption" : "Test4 Q25",
     "label"   : "t4q25",
-    "options" : "width=0.67\\textwidth",
-    "place"   : "ht"
+    "options" : {"width":"0.33\\textwidth"},
+    "place"   : "hb"
 }
 ```
 
-# $\LaTeX$ example
+# Figures example
 
-$\LaTeX$ is great!
+## PNG
+With `![My\ toolboxes](Figures/toolboxes.png){#fig:tbx ratio=1.025}`,
+we get @fig:tbx:
+
+![My\ toolboxes](Figures/toolboxes.png){#fig:tbx ratio=1.025}
+
+## PDF
+
+For including PDF (e.g. generated from Tikz) see @fig:t4q25 and @fig:insc
+
+# $\TeX$ example
+
+`This is a \hypertarget{examplelink}{link} that has been referenced at the beginning of this document.`{=latex}
+
+$\TeX$ is great!
 
 $$
 \begin{aligned}

@@ -1,14 +1,16 @@
-\usepackage{xeCJK}
 \usepackage{xltxtra} % this package loads fontspec
 \defaultfontfeatures{Mapping=tex-text}
 
-\setmainfont{Palatino}
+\usepackage[sc,osf]{mathpazo}
+\usepackage[scaled]{helvet}	% ss
+\renewcommand{\ttdefault}{lmtt}	% tt
+\usepackage[T1]{fontenc}
 
-% monspace: especially for code listing
-\setmonofont[
-  Path           = \fontpath/,
-  Extension      = .ttf,
-]{Cascadia}
+%%% monspace: especially for code listing
+% \setmonofont[
+%   Path           = \fontpath/,
+%   Extension      = .ttf,
+% ]{Cascadia}
 
 %%% UbuntuMono or fantasque might be looking better for someone
 % \setmonofont[
@@ -19,14 +21,3 @@
 %   ItalicFont     = *-Italic,
 %   BoldItalicFont = *-BoldItalic,
 % ]{UbuntuMono} %{fantasquesansmono}
-
-\setCJKmainfont[
-  Path = \fontpath/,
-  BoldFont={Hiragino Sans GB W6.ttc}, % {SourceHanSansHWSC-Bold.otf} ,
-  ItalicFont={AdobeKaitiStd-Regular.otf},
-  ItalicFeatures={Scale=1},
-]{Hiragino Sans GB W3.ttc} % {SourceHanSansHWSC-Regular.otf} %{SourceHanSerifSC-Regular.otf}
-
-\setCJKmonofont[
-  Path = \fontpath/,
-]{AdobeKaitiStd-Regular.otf}

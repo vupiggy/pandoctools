@@ -10,10 +10,11 @@ ifndef DOCTOOLS
   DOCTOOLS=$(HOME)/Projects/pandoctools
 endif
 STYLEDIR	=	$(DOCTOOLS)/styles
+
 ifndef TEXFONTPATH
 TEXFONTPATH	=	$(DOCTOOLS)/fonts
 endif
-TEXINPUTS	=	$${TEXINPUTS}:$(STYLEDIR)
+
 TEXMDPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble_*.tex)
 TEXPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble*.tex)
 TEXTEMPLATE	=	$(STYLEDIR)/md2pdf_template.tex
@@ -39,7 +40,7 @@ else
   OUTPUT=>/dev/null 2>&1
 endif
 
-### TeX
+### LaTeX documents
 
 ### Dependency ###
 AWK=awk
@@ -73,37 +74,38 @@ include $(master_tex:.tex=.d)
 	@echo "TeXing" $< "3 times..."
 	@set -e; \
 	 for i in {1..3}; do echo "TeXing $$i";									\
-		TEXINPUTS=$${TEXINPUTS}:$(TEXINPUTS)								\
+		TEXINPUTS=$${TEXINPUTS}:$(STYLEDIR)								\
 		xelatex -halt-on-error -shell-escape -interaction=batchmode -jobname=$(@:.pdf=) 		\
 		"$(EXTRATEXARGS) \input{$<}" $(OUTPUT)								\
 		|| (echo "Failed...exit"; exit 1);								\
 	 done
 
-### Markdown
-FIGURESDIR=Figures
-FIGURES=$(foreach fig, $(FIGURES_PDF), $(FIGURESDIR)/$(fig))
+### Markdown(Pandoc) documents
+ifndef FIGURESDIR
+  FIGURESDIR=Figures
+endif
+
+# Makefile that includes this file must define FIGURES_PDF, MDPARTS
 FIGURESRC=$(foreach fig, $(FIGURES_PDF), $(FIGURESDIR)/src/$(fig:.pdf=.tikz))
-$(FIGURES): $(FIGURESRC)
-	@make -C Figures/ ALL TEXINPUTS=$(TEXINPUTS) DEBUG=$(DEBUG) DOCTOOLS=$(DOCTOOLS)
 
-Figures:$(FIGURESRC)
-	@make -C Figures/ ALL TEXINPUTS=$(TEXINPUTS) DEBUG=$(DEBUG) DOCTOOLS=$(DOCTOOLS)
-
-%.md.pdf: $(MDPARTS) $(TEXMDPREAMBLES) $(FIGURES)
+%.md.pdf: $(MDPARTS) $(TEXMDPREAMBLES) $(FIGURESRC)
+	@make -C $(FIGURESDIR) ALL TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)" DEBUG=$(DEBUG) DOCTOOLS=$(DOCTOOLS)
 	@printf "%-12s %s\n" "Generating" $@
-	@TEXINPUTS=$(TEXINPUTS)							\
+	@TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)"					\
 		pandoc $(EXTRAARGS)						\
 		--pdf-engine=xelatex						\
 		--pdf-engine-opt="-shell-escape"				\
-		--listings							\
+		--from markdown+pipe_tables+table_captions			\
+		$(LISTINGS)							\
 		-V fontpath="$(TEXFONTPATH)/"					\
+		$(RESOURCEPATH)							\
 		--template=$(TEXTEMPLATE) $(MDPARTS) -o $(OUTDIR)$@ $(OUTPUT)
 
-%.html : $(MDPARTS) $(HTMLSTYLES) $(FIGURES)
+%.html : $(MDPARTS) $(HTMLSTYLES) $(FIGURESRC)
 	@printf "%-12s %s\n" "Generating" $@
 	@pandoc $(EXTRAARGS)							\
 		--katex=https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/		\
-		--toc --toc-depth=2						\
+		--toc --toc-depth=1						\
 		--wrap=preserve							\
 		--listings							\
 		--section-divs							\
@@ -112,9 +114,9 @@ Figures:$(FIGURESRC)
 		--to html5  --template=$(HTML5TEMPLATE)				\
 		$(HTMLCMDCSS)							\
 		--metadata date="`date`"					\
-		--output $@ $(MDPARTS)
+		--output $@ $(MDPARTS) $(OUTPUT)
 
-### Figures
+### Figures(in TikZ)
 %.pdf: src/%.tikz
 	@printf "%-12s %s\n" "Tikzing " $<
 	@tikzfile=$<; texfile=$${tikzfile%%.tikz}.tex; tikzfile=`basename $<`;		\
@@ -123,7 +125,9 @@ Figures:$(FIGURESRC)
 	 printf "\\\usepackage{amsthm}\n"				>>$${texfile};	\
 	 printf "\\\usepackage{tkz-euclide}\n"				>>$${texfile};	\
 	 printf "\\\usetkzobj{all}\n"					>>$${texfile};	\
-	 printf "\\\usepackage{fontspec}\n"				>>$${texfile};	\
+	 printf "\\\usepackage[scaled]{helvet}\n"			>>$${texfile};	\
+	 printf "\\\renewcommand{\\\ttdefault}{lmtt}\n"			>>$${texfile};	\
+	 printf "\\\usepackage[T1]{fontenc}\n"				>>$${texfile};	\
 	 printf "\\\usepackage{xcolor}\n"				>>$${texfile};	\
 	 printf "\\\begin{document}\n"					>>$${texfile};	\
 	 printf "\\\input{$${tikzfile}}\n"				>>$${texfile};	\
