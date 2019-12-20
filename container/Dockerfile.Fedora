@@ -42,4 +42,4 @@ RUN tlmgr install standalone            \
                   listofitems           \
                   readarray             \
                   verbatimbox
-                                    
+

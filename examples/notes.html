@@ -8,26 +8,27 @@
   <title>Ada’s Maths Notes</title>
   <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -36,9 +37,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -71,7 +72,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="/home/luke/Projects/pandoctools/styles/latex.css">
-  <link rel="stylesheet" href="/home/luke/Projects/pandoctools/styles/katex.min.css">
   <link rel="stylesheet" href="/home/luke/Projects/pandoctools/styles/pandoc.css">
   <link rel="stylesheet" href="/home/luke/Projects/pandoctools/styles/theorem.css">
   <link rel="stylesheet" href="/home/luke/Projects/pandoctools/styles/tufte-extra.css">
@@ -92,10 +92,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header>
 <h1 class="title">Ada’s Maths Notes</h1>
 <!--
-<p class="byline">Fri Nov 1 00:07:34 EDT 2019 &ndash; Ada Huang <a href="mailto:lukehuang.ca@gmail.com">&lt;lukehuang.ca@gmail.com&gt;</a></p>
+<p class="byline">Thu Nov 14 09:08:39 EST 2019 &ndash; Ada Huang <a href="mailto:lukehuang.ca@gmail.com">&lt;lukehuang.ca@gmail.com&gt;</a></p>
 -->
 <p class="byline">Ada Huang <a href="mailto:lukehuang.ca@gmail.com">&lt;lukehuang.ca@gmail.com&gt;</a></p>
-<p class="byline">Fri Nov 1 00:07:34 EDT 2019</p>
+<p class="byline">Thu Nov 14 09:08:39 EST 2019</p>
 </header>
 <nav id="TOC">
 <ul>
@@ -114,25 +114,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </nav>
 <section id="code-snippet-example" class="level1">
 <h1>Code Snippet Example</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode Go"><code class="sourceCode go"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">type</span> Figure <span class="kw">struct</span> {</a>
-<a class="sourceLine" id="cb1-2" title="2">	Target	<span class="dt">string</span></a>
-<a class="sourceLine" id="cb1-3" title="3">	Path	<span class="dt">string</span>		<span class="st">`json:path`</span></a>
-<a class="sourceLine" id="cb1-4" title="4">	Caption	<span class="dt">string</span>		<span class="st">`json:caption`</span></a>
-<a class="sourceLine" id="cb1-5" title="5">	Label	<span class="dt">string</span>		<span class="st">`json:label`</span></a>
-<a class="sourceLine" id="cb1-6" title="6">	Options	<span class="dt">string</span>		<span class="st">`json:options`</span></a>
-<a class="sourceLine" id="cb1-7" title="7">	Place	<span class="dt">string</span>		<span class="st">`json:place`</span></a>
-<a class="sourceLine" id="cb1-8" title="8">	Suffix  <span class="kw">map</span>[<span class="dt">string</span>]<span class="dt">string</span></a>
-<a class="sourceLine" id="cb1-9" title="9">}</a>
-<a class="sourceLine" id="cb1-10" title="10"></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="kw">const</span> latexTemplate = <span class="st">`</span></a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="ch">\b</span><span class="st">egin{figure}[{{.Place}}]</span></a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="st">  \centering</span></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="st">  \includegraphics[{{.Options}}]%</span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="st">      {{&quot;{&quot;}}{{.Path}}.{{index .Suffix .Target}}{{&quot;}&quot;}}</span></a>
-<a class="sourceLine" id="cb1-16" title="16"><span class="st">  \caption{{&quot;{&quot;}}{{.Caption}}{{&quot;}&quot;}}</span></a>
-<a class="sourceLine" id="cb1-17" title="17"><span class="st">  \label{{&quot;{fig:&quot;}}{{.Label}}{{&quot;}&quot;}}</span></a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="ch">\e</span><span class="st">nd{figure}</span></a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="st">`</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode Go"><code class="sourceCode go"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">type</span> Figure <span class="kw">struct</span> {</span>
+<span id="cb1-2"><a href="#cb1-2"></a>	Target	<span class="dt">string</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>	Path	<span class="dt">string</span>		<span class="st">`json:path`</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>	Caption	<span class="dt">string</span>		<span class="st">`json:caption`</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>	Label	<span class="dt">string</span>		<span class="st">`json:label`</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>	Options	<span class="dt">string</span>		<span class="st">`json:options`</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>	Place	<span class="dt">string</span>		<span class="st">`json:place`</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>	Suffix  <span class="kw">map</span>[<span class="dt">string</span>]<span class="dt">string</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>}</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="kw">const</span> latexTemplate = <span class="st">`</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="ch">\b</span><span class="st">egin{figure}[{{.Place}}]</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="st">  \centering</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="st">  \includegraphics[{{.Options}}]%</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="st">      {{&quot;{&quot;}}{{.Path}}.{{index .Suffix .Target}}{{&quot;}&quot;}}</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="st">  \caption{{&quot;{&quot;}}{{.Caption}}{{&quot;}&quot;}}</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="st">  \label{{&quot;{fig:&quot;}}{{.Label}}{{&quot;}&quot;}}</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="ch">\e</span><span class="st">nd{figure}</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="st">`</span></span></code></pre></div>
 </section>
 <section id="amsthm-example" class="level1">
 <h1><code>amsthm</code> Example</h1>
@@ -197,15 +197,15 @@ We have a theorem about tangent line to a circle:</p>
 <section id="amc8" class="level2">
 <h2>AMC8</h2>
 <p>With the code block below:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb2-1" title="1"><span class="bn">    ```{.figure}</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="bn">    {</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="bn">        &quot;path&quot;    : &quot;Figures/t4q25&quot;,</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="bn">        &quot;caption&quot; : &quot;Test4 Q25&quot;,</span></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="bn">        &quot;label&quot;   : &quot;t4q25&quot;,</span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="bn">        &quot;options&quot; : &quot;width=0.67\\textwidth&quot;,</span></a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="bn">        &quot;place&quot;   : &quot;ht&quot;</span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="bn">    }</span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="bn">    ```</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1"></a><span class="bn">    ```{.figure}</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="bn">    {</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="bn">        &quot;path&quot;    : &quot;Figures/t4q25&quot;,</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="bn">        &quot;caption&quot; : &quot;Test4 Q25&quot;,</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="bn">        &quot;label&quot;   : &quot;t4q25&quot;,</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="bn">        &quot;options&quot; : &quot;width=0.67\\textwidth&quot;,</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="bn">        &quot;place&quot;   : &quot;ht&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="bn">    }</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="bn">    ```</span></span></code></pre></div>
 <p>You get the figure below:</p>
 
 <figure class="fullwidth">
