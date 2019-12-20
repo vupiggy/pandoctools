@@ -28,8 +28,8 @@
 \fi
 \input{preamble_code}
 
-\usepackage{anyfontsize}
-\usepackage[printwatermark]{xwatermark}
+\usepackage{anyfontsize} 
+% \usepackage[printwatermark]{xwatermark} % confict with exam class
 \newsavebox\wmbox
 \savebox\wmbox{\tikz[color=gray,opacity=0.15]%
 \node{\shortstack{\tiny Luke Huang\\{\fontsize{3}{3}\selectfont lukehuang.ca@me.com}}};}
@@ -38,7 +38,7 @@
 \usepackage{textcomp}
 
 % 页眉页脚
-\usepackage{fancyhdr}
+% \usepackage{fancyhdr} % exam class has already used fanchhdr
 
 % fancy stuff
 \usepackage{longtable}

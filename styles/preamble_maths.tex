@@ -17,7 +17,8 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{mathrsfs}
-\usepackage{fourier}
+% \usepackage{fourier}  % don't use together with ``mathpazo'' !
+
 \newcommand{\envert}[1]{\kern-2pt\left\lvert#1\right\rvert}
 \let\abs=\envert
 \makeatletter
@@ -31,17 +32,19 @@
 
 \mathchardef\mhyphen="2D
 
-\ifx\zh\undefined
+\ifx\zhtheorem\undefined
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section] % Lemma
+\newtheorem{notation}{Notation}[section]
 \fi
 
 \newcommand{\arc}[1]{{%
   \setbox9=\hbox{#1}%
   \ooalign{\resizebox{\wd9}{\height}{\texttoptiebar{\phantom{A}}}\cr#1}}}
 
-\everymath{\displaystyle}
+%\everymath{\displaystyle}
 
 \makeatletter
 \newcommand{\slantparallel}{\mathrel{\mathpalette\new@parallel\relax}}

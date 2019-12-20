@@ -50,7 +50,7 @@
 
 \renewcommand{\figurename}{图}
 \renewcommand{\tablename}{表}
-
+\ifdefined\zhtheorem
 \usepackage[title]{appendix}
 \newcommand{\sectionbreak}{\clearpage}
 \renewcommand{\appendixname}{附录}
@@ -63,15 +63,22 @@
 % \nonfrenchspacing
 % \newcommand{\zhem}[1]{\ifnum\spacefactor>1900 {\em #1}\kern0.2em\else \kern0.2em{\em #1}\kern0.2em\fi}
 \newtheorem{theorem}{定理}[section] % Theorem
-\newtheorem{lemma}{引理}[theorem] % Lemma
+\newtheorem{lemma}{引理}[section] % Lemma
+\theoremstyle{definition} \newtheorem{notation}{符号}[section]
+%\newtheorem{proof}{证明}[section] % proof
 \newcounter{ax}[section] % Axiom
 \newtheorem{axiom}[ax]{公设}
 \newtheorem{prop}{命题}[section] % Proposition
 \newtheorem{coro}{推论}[theorem] % Corollary
-\renewcommand*{\qedsymbol}{\emph{【证毕】}}
-\newtheorem{definition}{定义}[section]
+%\renewcommand*{\qedsymbol}{\emph{【证毕】}}
+\theoremstyle{definition} \newtheorem{definition}{定义}[section]
+\fi
+
 \newcommand{\subjectto}{\ \ s.t.\;}
 \renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
+
+\renewcommand{\gcd}{\mathscr gcd}
+\newcommand{\lcm}{\mathscr lcm}
 
 %%% TODO(luke): confict with \arc macro defined in preamble_maths.tex
 % \usepackage{diagbox} % 中式表格斜线表头
