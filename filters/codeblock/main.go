@@ -5,6 +5,8 @@
 package main
 
 import (
+	_ "os"
+	_ "fmt"
 	"github.com/vupiggy/pandoc-filter/codeblock/codeblock"
 	"github.com/vupiggy/pandoc-filter/codeblock/figure"
 	"github.com/vupiggy/pandoc-filter/codeblock/amsthm"
@@ -30,17 +32,22 @@ var cbMap = map[string]codeblock.CodeBlock {
 }
 
 func processCB(key string, value interface{}, target string, meta interface{}) interface{} {
+	var class string
+	var content string
+
 	if key == "CodeBlock" {
 		cb		:= value.([]interface{})
 		attrs	:= cb[0].([]interface{})
-		classes	:= attrs[1].([]interface{})
-		content := cb[1].(string)
 
-		if len(classes) > 0 {
-			t := cbMap[classes[0].(string)]
-			if t != nil {
-				return Insert(cbMap[classes[0].(string)], target, content)
-			}
+		if len(attrs[1].([]interface{})) > 0 {
+			class	 = attrs[1].([]interface{})[0].(string)
+			content  = cb[1].(string)
+		}
+	}
+	if len(class) > 0 {
+		t := cbMap[class]
+		if t != nil {
+			return Insert(t, target, content)
 		}
 	}
 	return nil

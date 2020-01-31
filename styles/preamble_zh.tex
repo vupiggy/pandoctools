@@ -19,11 +19,11 @@
 % 尺寸设置
 \setlength{\parindent}{2em}
 \linespread{1.3} % 汉字显示不至于太密集
-%\addtolength{\parskip}{2ex}
+\addtolength{\parskip}{1ex}
 \addtolength{\voffset}{-0.2in}
 \addtolength{\textheight}{0.8in}
 \addtolength{\footskip}{10pt}
-%\addtolength{\textwidth}{66pt} % 中文版幅不宜过窄
+%\addtolength{\textwidth}{-8em}
 
 % 个人认为有些中文字体标点符号左右宽度过大
 \xeCJKDeclarePunctStyle {mine}
@@ -65,12 +65,12 @@
 \newtheorem{theorem}{定理}[section] % Theorem
 \newtheorem{lemma}{引理}[section] % Lemma
 \theoremstyle{definition} \newtheorem{notation}{符号}[section]
-%\newtheorem{proof}{证明}[section] % proof
+\newtheorem{Proof}{证明}[section] % proof
 \newcounter{ax}[section] % Axiom
 \newtheorem{axiom}[ax]{公设}
 \newtheorem{prop}{命题}[section] % Proposition
 \newtheorem{coro}{推论}[theorem] % Corollary
-%\renewcommand*{\qedsymbol}{\emph{【证毕】}}
+\renewcommand*{\qedsymbol}{\emph{【证毕】}}
 \theoremstyle{definition} \newtheorem{definition}{定义}[section]
 \fi
 

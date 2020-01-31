@@ -9,8 +9,9 @@ texpdf:	$(TEXPDFTARGETS)
 ifndef DOCTOOLS
   DOCTOOLS=$(HOME)/Projects/pandoctools
 endif
+ifndef STYLEDIR
 STYLEDIR	=	$(DOCTOOLS)/styles
-
+endif
 ifndef TEXFONTPATH
 TEXFONTPATH	=	$(DOCTOOLS)/fonts
 endif
@@ -18,17 +19,17 @@ endif
 TEXMDPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble_*.tex)
 TEXPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble*.tex)
 TEXTEMPLATE	=	$(STYLEDIR)/md2pdf_template.tex
-HTMLSTYLES	=	$(wildcard $(STYLEDIR)/*.css)
+HTMLSTYLES	=	$(wildcard $(HTMLSTYLEDIR)/*.css)
 HTML5TEMPLATE	=	$(STYLEDIR)/tufte.html5
 HTMLCMDCSS	=	$(foreach css, $(HTMLSTYLES), --css $(css))
 
 clean:
-	@[ -d Figures ] && make -C Figures/ CLEAN DOCTOOLS=$(DOCTOOLS)
+	@[ -d Figures ] && make -C Figures/ clean DOCTOOLS=$(DOCTOOLS)
 	@echo "RM pdf html"
 	@rm -f *.html *.pdf *.d
 
 distclean:
-	@[ -d Figures ] && make -C Figures/ DISTCLEAN DOCTOOLS=$(DOCTOOLS)
+	@[ -d Figures ] && make -C Figures/ distclean DOCTOOLS=$(DOCTOOLS)
 	@echo "RM html, pdf, figures and all intermediates"
 	@rm -f *.html *.pdf *.aux *.log *.out *.toc *.xwm *.d
 
@@ -88,20 +89,23 @@ endif
 # Makefile that includes this file must define FIGURES_PDF, MDPARTS
 FIGURESRC=$(foreach fig, $(FIGURES_PDF), $(FIGURESDIR)/src/$(fig:.pdf=.tikz))
 
-%.md.pdf: $(MDPARTS) $(TEXMDPREAMBLES) $(FIGURESRC)
+LISTINGS=$(foreach md, $($*_mdparts), $(shell awk -F':' '/^[[:space:]]+"path"[[:space:]]*:.*.{c,h,cpp,hpp,go,py}/ {gsub(/",*/, "", $$2) ; print $$2}' $(md) | uniq))
+
+%.md.pdf: $$($$*_mdparts) $$(LISTINGS) $(TEXMDPREAMBLES) $(FIGURESRC)
 	@make -C $(FIGURESDIR) figures TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)" DEBUG=$(DEBUG) DOCTOOLS=$(DOCTOOLS)
 	@printf "%-12s %s\n" "Generating" $@
 	@TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)"					\
 		pandoc $(EXTRAARGS)						\
 		--pdf-engine=xelatex						\
 		--pdf-engine-opt="-shell-escape"				\
+		--from markdown+tex_math_single_backslash			\
+		--from markdown-markdown_in_html_blocks-native_divs		\
 		--from markdown+pipe_tables+table_captions			\
-		$(LISTINGS)							\
 		-V fontpath="$(TEXFONTPATH)/"					\
 		$(RESOURCEPATH)							\
-		--template=$(TEXTEMPLATE) $(MDPARTS) -o $(OUTDIR)$@ $(OUTPUT)
+		--template=$(TEXTEMPLATE) $($*_mdparts) -o $(OUTDIR)$@ $(OUTPUT)
 
-%.html : $(MDPARTS) $(HTMLSTYLES) $(FIGURESRC)
+%.md.html : $$($$*_mdparts) $$(LISTINGS) $(HTMLSTYLES) $(FIGURESRC)
 	@printf "%-12s %s\n" "Generating" $@
 	@pandoc $(EXTRAARGS)							\
 		--katex=https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/		\
@@ -109,19 +113,21 @@ FIGURESRC=$(foreach fig, $(FIGURES_PDF), $(FIGURESDIR)/src/$(fig:.pdf=.tikz))
 		--wrap=preserve							\
 		--listings							\
 		--section-divs							\
+		--from markdown+fenced_divs					\
+		--from markdown+pipe_tables+table_captions			\
 		--from markdown+tex_math_single_backslash			\
 		--from markdown+definition_lists				\
 		--to html5  --template=$(HTML5TEMPLATE)				\
 		$(HTMLCMDCSS)							\
 		--metadata date="`date`"					\
-		--output $@ $(MDPARTS) $(OUTPUT)
+		--output $@ $($*_mdparts) $(OUTPUT)
 
 ### Figures(in TikZ)
 %.pdf: src/%.tikz
 	@printf "%-12s %s\n" "Tikzing " $<
 	@tikzfile=$<; texfile=$${tikzfile%%.tikz}.tex; tikzfile=`basename $<`;		\
 	 printf "\\\documentclass[tikz, border=10pt]{standalone}\n\n"	>$${texfile};	\
-	 printf "\\\usetikzlibrary{calc,quotes,angles}\n"		>>$${texfile};	\
+	 printf "\\\usetikzlibrary{calc,quotes,angles,arrows}\n"	>>$${texfile};	\
 	 printf "\\\usepackage{amsthm}\n"				>>$${texfile};	\
 	 printf "\\\usepackage{tkz-euclide}\n"				>>$${texfile};	\
 	 printf "\\\usetkzobj{all}\n"					>>$${texfile};	\

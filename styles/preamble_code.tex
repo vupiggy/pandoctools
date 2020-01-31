@@ -3,19 +3,34 @@
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}
 \lstset{columns=flexible}
-%\lstset{keywordstyle=\color{NavyBlue}}
-\lstset{keywordstyle=\color{kubeblue}}
-\lstset{commentstyle=\textit}
-\lstset{captionpos=b}
-\lstset{backgroundcolor=\color{lstbg}}
-\lstset{frame=single}
-\lstset{framesep=4pt}
-\lstset{framerule=0pt}
-\lstset{basicstyle=\ttfamily\footnotesize}
-%\lstset{basicstyle=\ttfamily}
-\lstset{numberstyle=\small}
-\lstset{xleftmargin=1em}
-\lstset{lineskip=-0.25pt}
+
+%\lstdefinestyle{mystyle}{
+\lstset{language=C++,
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{lstbg},
+  keywordstyle=\color{lstkeyword},
+  emph={int,char,double,float,unsigned,void,bool},
+  emphstyle=\color{lstkeywordR},
+  % classoffset=1,
+  % otherkeywords={>,<,.,;,-,!,=,~},
+  % morekeywords={>,<,.,;,-,!,=,~},
+  % keywordstyle=\color{lstkeywordO},
+  % classoffset=0,
+  stringstyle=\color{lststring},
+  commentstyle=\ttfamily\color{lstcomment},
+  captionpos=b,
+  numberstyle=\color{lstnumber},
+  frame=single,
+  framesep=4pt,
+  framerule=0pt,
+  xleftmargin=1em,
+  tabsize=2,
+  columns=flexible,
+  keepspaces=true,
+}
+%\lstset{style=mystyle}
+
+%%% Extra stuff
 \lstdefinelanguage{bash}
 {
 morekeywords={sudo}

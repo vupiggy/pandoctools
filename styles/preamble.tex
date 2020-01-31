@@ -1,7 +1,7 @@
 \usepackage{calc}
 
 % 页面布局
-\usepackage[inner=3.2cm,outer=1.6cm]{geometry}
+\usepackage[twoside, inner=2.4cm, outer=4.4cm]{geometry}
 \usepackage[dvipsnames]{xcolor}
 
 % pdfstartview=FitW % 打开pdf时页面自动适配窗口大小
@@ -16,10 +16,18 @@
   pdfstartview=FitW%
 ]{hyperref}
 
+% \ifdefined\zh
+% \usepackage{polyglossia}
+% \setotherlanguage{english}
+% \fi
+
+\ifdefined\zh
+\def\zhtheorem{true}
+\fi
 \input{colordef}
 \input{preamble_fig}
-\input{preamble_maths}
 \input{preamble_fonts}
+\input{preamble_maths}
 \ifdefined\zh
 \input{preamble_zh}
 \else
@@ -28,7 +36,7 @@
 \fi
 \input{preamble_code}
 
-\usepackage{anyfontsize} 
+\usepackage{anyfontsize}
 % \usepackage[printwatermark]{xwatermark} % confict with exam class
 \newsavebox\wmbox
 \savebox\wmbox{\tikz[color=gray,opacity=0.15]%
@@ -49,3 +57,14 @@
 \setcounter{tocdepth}{2}
 
 \usepackage{verbatimbox}
+
+\usepackage{enumitem}
+%\usepackage{fdsymbol}
+%\setlist[itemize,1]{labelsep=1.2em,label=\large\bfseries{$\natural$}}
+%\setlist[itemize,2]{labelsep=1.2em,label=\large\bfseries{$\flat$}}
+%\setlist[itemize,3]{labelsep=1.2em,label=\large\bfseries{$\sharp$}}
+\usepackage{harmony}
+\setlist[itemize,1]{labelsep=1.2em,label=\large\bfseries{$\Vier$}}
+\setlist[itemize,2]{labelsep=1.2em,label=\large\bfseries{$\AAcht$}}
+\setlist[itemize,3]{labelsep=1.2em,label=\large\bfseries{$\sharp$}}
+% \newcommand{\sectionbreak}{\clearpage}

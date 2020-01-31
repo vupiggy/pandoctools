@@ -5,6 +5,8 @@
 package amsthm
 
 import (
+	"os"
+	"fmt"
 	"bytes"
 	"encoding/json"
 	"text/template"
@@ -21,6 +23,7 @@ type Theorem struct {
 	Type	string `json:type`
 	Item	string `json:item`
 	Text	string `json:text`
+	PdfOnly	bool   `json:pdfonly`
 }
 
 const latexTemplate = `
@@ -31,7 +34,7 @@ const latexTemplate = `
 
 const htmlTemplate = `
 <div class="{{.Type}}">
-({{.Item}}) {{.Text}}
+({{.Item}}) {{"xxx"}} {{.Text}}
 </div>
 `
 
@@ -39,13 +42,25 @@ func (theorem *Theorem) Block(target string, content string) interface{} {
 	var tpl *template.Template
 	var output bytes.Buffer
 	var thm Theorem
-	err := json.Unmarshal([]byte(content), &thm); if err != nil {
+	bytes := []byte(content)
+	for i, ch := range bytes {
+		if ch == '\r' || ch == '\n' {
+			bytes[i] = ' '
+		}
+	}
+	err := json.Unmarshal(bytes, &thm); if err != nil {
+		fmt.Fprintf(os.Stderr, "unmarshal %s\n", err);
 		return nil
 	}
+
+	if (thm.PdfOnly && (target == "html" || target == "html5")) {
+		return pf.Para([]interface{} {pf.Str("")})
+	}
+
 	tpl, err = template.New("theorem").
-			Parse(templateMap[target]); if err != nil {
-			return nil
-		}
+		Parse(templateMap[target]); if err != nil {
+		return nil
+	}
 	tpl.Execute(&output, thm)
 	return pf.RawBlock(target, output.String())
 }

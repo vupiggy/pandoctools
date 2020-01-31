@@ -1,6 +1,8 @@
 package figure
 
 import (
+	"os"
+	"fmt"
 	"bytes"
 	"text/template"
 	"encoding/json"
@@ -40,6 +42,7 @@ func (figure *Figure) Block(format string, content string) interface{} {
 	var fig Figure
 	err := json.Unmarshal([]byte(content), &fig)
 	if err != nil {
+		fmt.Fprintf(os.Stderr, "figure issue\n");
 		return nil
 	}
 

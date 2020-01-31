@@ -34,12 +34,14 @@ body {
 */
 
 a {
-    color: #0645ad;
+    color: #06e;
+    /* color: #0645ad; */
     text-decoration: none;
 }
 
 a:visited {
-    color: #0b0080;
+    /* color: #0b0080; */
+    color: #06e;
 }
 
 a:hover {
@@ -47,7 +49,8 @@ a:hover {
 }
 
 a:active {
-    color: #faa700;
+    color: #06e;
+    /* color: #faa700; */
 }
 
 a:focus {
@@ -78,8 +81,14 @@ p {
     margin: 1em 0;
 }
 
-em {
+em:lang(en) {
     font-style: italic;
+}
+
+em:lang(zh) {
+    font-style:  normal;
+    font-family: "Kaiti SC";
+    font-size: 1.1em;
 }
 
 img {
@@ -100,6 +109,13 @@ h4, h5, h6 {
 
 h1 {
     font-size: 2.2em;
+}
+
+h1:after
+{
+    content:' ';
+    display:block;
+    border:1px solid gray;
 }
 
 h2 {
@@ -141,17 +157,27 @@ hr {
     padding: 0;
 }
 
+div.sourceCode {
+    padding-left: 1em;
+    padding-top: 0.5ex;
+    padding-bottom: 0.5ex;
+    border: 1px solid #ddd;
+    width:105%;
+}
+
 pre, code, kbd, samp {
-    color: #000;
+    /* color: #000; */
+    /* border: 1px solid #ddd; */
     font-family: monospace, monospace;
-    _font-family: 'courier new', monospace;
-    font-size: 0.98em;
+    _font-family: 'Cascadia', 'courier new', monospace;
+    font-size: 0.925em;
 }
 
 pre {
     white-space: pre;
     white-space: pre-wrap;
     word-wrap: break-word;
+    max-width:120%;
 }
 
 b, strong {
@@ -346,8 +372,10 @@ table td {
 }
 
 /* Luke's hack */
+/*
 #TOC {
     position: fixed;
     right: 5em;
     top: 10em;
 }
+*/

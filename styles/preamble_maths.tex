@@ -17,6 +17,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{mathrsfs}
+\usepackage{siunitx} % \ang{30} -> 30°
 % \usepackage{fourier}  % don't use together with ``mathpazo'' !
 
 \newcommand{\envert}[1]{\kern-2pt\left\lvert#1\right\rvert}
@@ -38,6 +39,7 @@
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}{Lemma}[section] % Lemma
 \newtheorem{notation}{Notation}[section]
+%\newtheorem{proof}{Proof}[section] % proof
 \fi
 
 \newcommand{\arc}[1]{{%
@@ -46,6 +48,7 @@
 
 %\everymath{\displaystyle}
 
+% 只要思想不滑坡，方法总比困难多！Unicode: x2225, ∥
 \makeatletter
 \newcommand{\slantparallel}{\mathrel{\mathpalette\new@parallel\relax}}
 \newcommand{\new@parallel}[2]{%
