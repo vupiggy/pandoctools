@@ -9,16 +9,26 @@ texpdf:	$(TEXPDFTARGETS)
 ifndef DOCTOOLS
   DOCTOOLS=$(HOME)/Projects/pandoctools
 endif
+
 ifndef STYLEDIR
 STYLEDIR	=	$(DOCTOOLS)/styles
 endif
+
+ifndef HTMLSTYLEDIR
+HTMLSTYLEDIR	=	$(STYLEDIR)
+endif
+
 ifndef TEXFONTPATH
 TEXFONTPATH	=	$(DOCTOOLS)/fonts
 endif
 
 TEXMDPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble_*.tex)
 TEXPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble*.tex)
+
+ifndef TEXTEMPLATE
 TEXTEMPLATE	=	$(STYLEDIR)/md2pdf_template.tex
+endif
+
 HTMLSTYLES	=	$(wildcard $(HTMLSTYLEDIR)/*.css)
 HTML5TEMPLATE	=	$(STYLEDIR)/tufte.html5
 HTMLCMDCSS	=	$(foreach css, $(HTMLSTYLES), --css $(css))
