@@ -18,20 +18,19 @@
 %% usually bad in big doc, might look good for article tho
 % \newcommand{\sectionbreak}{\clearpage}
 
-\ifdefined\zh
-  \def\zhtheorem{true}
-\fi
 \input{preamble_layout}
 \input{preamble_color}
 \input{preamble_fig}
 \input{preamble_fonts}
-\input{preamble_maths}
-\ifdefined\zh
+\ifdefined\han
+  % All about typesetting in Chinese
+  \def\zhtheorem{true}
   \input{preamble_zh}
 \else
   \linespread{1.1}
   \addtolength{\parskip}{0.25ex}
 \fi
+\input{preamble_maths}
 \input{preamble_code}
 
 \usepackage{anyfontsize}

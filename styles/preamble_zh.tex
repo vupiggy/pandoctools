@@ -50,7 +50,7 @@
 \renewcommand{\figurename}{图}
 \renewcommand{\tablename}{表}
 \ifdefined\zhtheorem
-\usepackage[title]{appendix}
+\usepackage{appendix}
 \renewcommand{\appendixname}{附录}
 % \renewcommand{\bibname}{参考文献}
 \renewcommand{\contentsname}{目~录}
@@ -60,16 +60,6 @@
 \renewcommand{\abstractname}{\Large{摘~要}}
 % \nonfrenchspacing
 % \newcommand{\zhem}[1]{\ifnum\spacefactor>1900 {\em #1}\kern0.2em\else \kern0.2em{\em #1}\kern0.2em\fi}
-\newtheorem{theorem}{定理}[section] % Theorem
-\newtheorem{lemma}{引理}[section] % Lemma
-\theoremstyle{definition} \newtheorem{notation}{符号}[section]
-\newtheorem{Proof}{证明}[section] % proof
-\newcounter{ax}[section] % Axiom
-\newtheorem{axiom}[ax]{公设}
-\newtheorem{prop}{命题}[section] % Proposition
-\newtheorem{coro}{推论}[theorem] % Corollary
-\renewcommand*{\qedsymbol}{\emph{【证毕】}}
-\theoremstyle{definition} \newtheorem{definition}{定义}[section]
 \fi
 
 \newcommand{\subjectto}{\ \ s.t.\;}

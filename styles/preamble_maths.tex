@@ -34,12 +34,23 @@
 \mathchardef\mhyphen="2D
 
 \ifx\zhtheorem\undefined
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}{Lemma}[section] % Lemma
-\newtheorem{notation}{Notation}[section]
-%\newtheorem{proof}{Proof}[section] % proof
+  \theoremstyle{definition}
+  \newtheorem{definition}{Definition}[section]
+  \newtheorem{theorem}{Theorem}[section]
+  \newtheorem{lemma}{Lemma}[section] % Lemma
+  \newtheorem{notation}{Notation}[section]
+  %\newtheorem{proof}{Proof}[section] % proof
+\else
+  \newtheorem{theorem}{定理}[section] % Theorem
+  \newtheorem{lemma}{引理}[section] % Lemma
+  \theoremstyle{definition} \newtheorem{notation}{符号}[section]
+  \newtheorem{Proof}{证明}[section] % proof
+  \newcounter{ax}[section] % Axiom
+  \newtheorem{axiom}[ax]{公设}
+  \newtheorem{prop}{命题}[section] % Proposition
+  \newtheorem{coro}{推论}[theorem] % Corollary
+  \renewcommand*{\qedsymbol}{\emph{【证毕】}}
+  \theoremstyle{definition} \newtheorem{definition}{定义}[section]
 \fi
 
 \newcommand{\arc}[1]{{%
