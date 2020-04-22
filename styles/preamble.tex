@@ -1,10 +1,8 @@
+% Misc
 \usepackage{calc}
-
-% 页面布局
-\usepackage[twoside, inner=2.4cm, outer=4.4cm]{geometry}
 \usepackage[dvipsnames]{xcolor}
 
-% pdfstartview=FitW % 打开pdf时页面自动适配窗口大小
+% Hyperlink
 \usepackage[%
   breaklinks=true,%
   colorlinks,%
@@ -16,26 +14,23 @@
   pdfstartview=FitW%
 ]{hyperref}
 
-% \ifdefined\zh
-% \usepackage{polyglossia}
-% \setotherlanguage{english}
-% \fi
-
 \usepackage{titlesec}
-\newcommand{\sectionbreak}{\clearpage}
+%% usually bad in big doc, might look good for article tho
+% \newcommand{\sectionbreak}{\clearpage}
 
 \ifdefined\zh
-\def\zhtheorem{true}
+  \def\zhtheorem{true}
 \fi
-\input{colordef}
+\input{preamble_layout}
+\input{preamble_color}
 \input{preamble_fig}
 \input{preamble_fonts}
 \input{preamble_maths}
 \ifdefined\zh
-\input{preamble_zh}
+  \input{preamble_zh}
 \else
-\linespread{1.1}
-\addtolength{\parskip}{0.25ex}
+  \linespread{1.1}
+  \addtolength{\parskip}{0.25ex}
 \fi
 \input{preamble_code}
 
@@ -45,10 +40,10 @@
 \savebox\wmbox{\tikz[color=gray,opacity=0.15]%
 \node{\shortstack{\tiny Luke Huang\\{\fontsize{3}{3}\selectfont lukehuang.ca@me.com}}};}
 
-% 注册商标，版权所有
+% Copyright symbol
 \usepackage{textcomp}
 
-% 页眉页脚
+% header/footer
 \usepackage{fancyhdr} % exam class has already used fanchhdr
 
 % fancy stuff
@@ -56,11 +51,9 @@
 \usepackage{booktabs}
 \usepackage{framed}
 
-\usepackage[titles]{tocloft}
-\setcounter{tocdepth}{2}
-
 \usepackage{verbatimbox}
 
+% Bad taste ;)
 \usepackage{enumitem}
 %\usepackage{fdsymbol}
 %\setlist[itemize,1]{labelsep=1.2em,label=\large\bfseries{$\natural$}}

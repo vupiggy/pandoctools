@@ -11,7 +11,6 @@ import (
 	"github.com/vupiggy/pandoc-filter/codeblock/figure"
 	"github.com/vupiggy/pandoc-filter/codeblock/amsthm"
 	"github.com/vupiggy/pandoc-filter/codeblock/code"
-	"github.com/vupiggy/pandoc-filter/codeblock/choice"
 	pf "github.com/oltolm/go-pandocfilters"
 )
 
@@ -25,13 +24,11 @@ func Insert(cb codeblock.CodeBlock, target string, content string) interface{} {
 var fig figure.Figure
 var thm amsthm.Theorem
 var cod code.Code
-var cho code.Choice
 
 var cbMap = map[string]codeblock.CodeBlock {
 	"figure"  : &fig,
 	"theorem" : &thm,
 	"snippet" : &cod,
-	"choice"  : &cho
 }
 
 func processCB(key string, value interface{}, target string, meta interface{}) interface{} {

@@ -1,31 +1,14 @@
 \usepackage{xltxtra} % this package loads fontspec
 \defaultfontfeatures{Mapping=tex-text}
 
+% Palatino for serif
 %\usepackage[sc,osf]{mathpazo}
 \usepackage[sc]{mathpazo}
-\usepackage[scaled]{helvet}	% ss
-\renewcommand{\ttdefault}{lmtt}	% tt
+% Helvetica for sans serif
+\usepackage[scaled]{helvet}
 \usepackage[T1]{fontenc}
 
-% \setmainfont[
-%   Path = \fontpath/,
-%   Extension = .ttf,
-%   BoldFont = * Bold,
-%   ItalicFont = * Italic,
-%   BoldItalicFont = * BoldItalic,
-% ]{Birka}
-%%% monspace: especially for code listing
 \setmonofont[
   Path           = \fontpath/,
   Extension      = .ttf,
 ]{Cascadia}
-
-%%% UbuntuMono or fantasque might be looking better for someone
-% \setmonofont[
-%   Path           = \fontpath/,
-%   Extension      = .ttf,
-%   UprightFont    = *-Regular,
-%   BoldFont       = *-Bold,
-%   ItalicFont     = *-Italic,
-%   BoldItalicFont = *-BoldItalic,
-% ]{UbuntuMono} %{fantasquesansmono}

@@ -1,4 +1,11 @@
-\documentclass[titlepage]{article}
+\documentclass[
+  $if(papersize)$
+  $papersize$paper,
+  $endif$
+  $if(extraoptions)$
+  $extraoptions$
+  $endif$
+]{$documentclass$}
 
 $if(fontpath)$
 \def\fontpath{$fontpath$}
@@ -9,6 +16,8 @@ $if(zh)$
 $endif$
 
 \input{preamble}
+\usepackage{tocloft}
+\setcounter{tocdepth}{1}
 
 $if(highlighting-macros)$
 $highlighting-macros$
@@ -18,12 +27,7 @@ $endif$
 \begin{document}
 
 \newcounter{groupdef}
-
 \pagestyle{empty}
-%%% pt Depends on the used fonts
-\setlength\cftbeforesecskip{6pt}
-\setlength\cftbeforesubsecskip{6pt}
-\setlength\cftbeforesubsubsecskip{20pt}
 \tableofcontents
 \newpage
 
@@ -31,6 +35,7 @@ $if(watermark)$
 \newwatermark*[oddpages,color=red!5,angle=60,scale=12,xpos=-46,ypos=36]{\usebox\mybox}
 \newwatermark*[evenpages,color=red!5,angle=60,scale=12,xpos=-59,ypos=36]{\usebox\mybox}
 $endif$
+
 \setlength{\headheight}{15pt} % fancyhead should be at least 14.03358pt
 \pagestyle{fancy}
 

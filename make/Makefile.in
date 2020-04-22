@@ -1,7 +1,11 @@
-all:	pdf html
+ifndef PUBDIR
+  PUBDIR=./
+endif
+
+all:	html pdf
 pdf:	mdpdf texpdf
-html:	$(MDHTMLTARGETS)
-mdpdf:	$(MDPDFTARGETS)
+html:	$(foreach target, $(MDHTMLTARGETS), $(PUBDIR)/$(target))
+mdpdf:	$(foreach target, $(MDPDFTARGETS),  $(PUBDIR)/$(target))
 texpdf:	$(TEXPDFTARGETS)
 
 .PHONY: all pdf html mdpdf texpdf
@@ -11,22 +15,22 @@ ifndef DOCTOOLS
 endif
 
 ifndef STYLEDIR
-STYLEDIR	=	$(DOCTOOLS)/styles
+  STYLEDIR	=	$(DOCTOOLS)/styles
 endif
 
 ifndef HTMLSTYLEDIR
-HTMLSTYLEDIR	=	$(STYLEDIR)
+  HTMLSTYLEDIR	=	$(STYLEDIR)
 endif
 
 ifndef TEXFONTPATH
-TEXFONTPATH	=	$(DOCTOOLS)/fonts
+  TEXFONTPATH	=	$(DOCTOOLS)/fonts
 endif
 
 TEXMDPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble_*.tex)
 TEXPREAMBLES	=	$(wildcard $(STYLEDIR)/preamble*.tex)
 
 ifndef TEXTEMPLATE
-TEXTEMPLATE	=	$(STYLEDIR)/md2pdf_template.tex
+  TEXTEMPLATE	=	$(STYLEDIR)/md2pdf_template.tex
 endif
 
 HTMLSTYLES	=	$(wildcard $(HTMLSTYLEDIR)/*.css)
@@ -36,12 +40,12 @@ HTMLCMDCSS	=	$(foreach css, $(HTMLSTYLES), --css $(css))
 clean:
 	@[ -d Figures ] && make -C Figures/ clean DOCTOOLS=$(DOCTOOLS)
 	@echo "RM pdf html"
-	@rm -f *.html *.pdf *.d
+	@rm -f $(PUBDIR)/*.{pdf,html} *.d
 
 distclean:
 	@[ -d Figures ] && make -C Figures/ distclean DOCTOOLS=$(DOCTOOLS)
 	@echo "RM html, pdf, figures and all intermediates"
-	@rm -f *.html *.pdf *.aux *.log *.out *.toc *.xwm *.d
+	@rm -f $(PUBDIR)/*.{pdf.html} *.aux *.log *.out *.toc *.xwm *.d
 
 .PHONY: clean distclean
 
@@ -51,7 +55,7 @@ else
   OUTPUT=>/dev/null 2>&1
 endif
 
-### LaTeX documents
+### ------------------------ LaTeX documents ------------------------ ###
 
 ### Dependency ###
 AWK=awk
@@ -84,38 +88,32 @@ include $(master_tex:.tex=.d)
 %.tex.pdf: %.tex $(TEXPREAMBLES)
 	@echo "TeXing" $< "3 times..."
 	@set -e; \
-	 for i in {1..3}; do echo "TeXing $$i";									\
-		TEXINPUTS=$${TEXINPUTS}:$(STYLEDIR)								\
-		xelatex -halt-on-error -shell-escape -interaction=batchmode -jobname=$(@:.pdf=) 		\
-		"$(EXTRATEXARGS) \input{$<}" $(OUTPUT)								\
-		|| (echo "Failed...exit"; exit 1);								\
+	 for i in {1..3}; do echo "TeXing $$i";							\
+		TEXINPUTS=$${TEXINPUTS}:$(STYLEDIR)						\
+		xelatex -halt-on-error -shell-escape -interaction=batchmode -jobname=$(@:.pdf=) \
+		"$(EXTRATEXARGS) \input{$<}" $(OUTPUT)						\
+		|| (echo "Failed...exit"; exit 1);						\
 	 done
 
-### Markdown(Pandoc) documents
+### ------------------------ Markdown(Pandoc) documents ------------- ###
 ifndef FIGURESDIR
   FIGURESDIR=Figures
 endif
 
-# Makefile that includes this file must define FIGURES_PDF, MDPARTS
+# Makefile that includes this file must define FIGURES_PDF, MDPARTS, and <target>_mdparts variables!
 FIGURESRC=$(foreach fig, $(FIGURES_PDF), $(FIGURESDIR)/src/$(fig:.pdf=.tikz))
-
 LISTINGS=$(foreach md, $($*_mdparts), $(shell awk -F':' '/^[[:space:]]+"path"[[:space:]]*:.*.{c,h,cpp,hpp,go,py}/ {gsub(/",*/, "", $$2) ; print $$2}' $(md) | uniq))
 
-%.md.pdf: $$($$*_mdparts) $$(LISTINGS) $(TEXMDPREAMBLES) $(FIGURESRC)
-	@make -C $(FIGURESDIR) figures TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)" DEBUG=$(DEBUG) DOCTOOLS=$(DOCTOOLS)
-	@printf "%-12s %s\n" "Generating" $@
-	@TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)"					\
-		pandoc $(EXTRAARGS)						\
-		--pdf-engine=xelatex						\
-		--pdf-engine-opt="-shell-escape"				\
-		--from markdown+tex_math_single_backslash			\
-		--from markdown-markdown_in_html_blocks-native_divs		\
-		--from markdown+pipe_tables+table_captions			\
-		-V fontpath="$(TEXFONTPATH)/"					\
-		$(RESOURCEPATH)							\
-		--template=$(TEXTEMPLATE) $($*_mdparts) -o $(OUTDIR)$@ $(OUTPUT)
-
-%.md.html : $$($$*_mdparts) $$(LISTINGS) $(HTMLSTYLES) $(FIGURESRC)
+$(PUBDIR)/%.md.html: $$($$*_mdparts) $$(LISTINGS) $(HTMLSTYLES) $(FIGURESRC)
+	@if [ -d $(FIGURESDIR) -a -f $(FIGURESDIR)/Makefile ]; 			\
+	 then 									\
+		printf "%-12s %s\n" "Generating" "figurs";			\
+		make -C $(FIGURESDIR) figures 					\
+			TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)" 			\
+			DOCTOOLS=$(DOCTOOLS)					\
+			DEBUG=$(DEBUG)						\
+			--no-print-directory;					\
+	 fi
 	@printf "%-12s %s\n" "Generating" $@
 	@pandoc $(EXTRAARGS)							\
 		--katex=https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/		\
@@ -131,6 +129,28 @@ LISTINGS=$(foreach md, $($*_mdparts), $(shell awk -F':' '/^[[:space:]]+"path"[[:
 		$(HTMLCMDCSS)							\
 		--metadata date="`date`"					\
 		--output $@ $($*_mdparts) $(OUTPUT)
+
+$(PUBDIR)/%.md.pdf: $$($$*_mdparts) $$(LISTINGS) $(TEXMDPREAMBLES) $(FIGURESRC)
+	@if [ -d $(FIGURESDIR) -a -f $(FIGURESDIR)/Makefile ]; 			\
+	 then 									\
+		printf "%-12s %s\n" "Generating" "figurs";			\
+		make -C $(FIGURESDIR) figures 					\
+			TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)" 			\
+			DOCTOOLS=$(DOCTOOLS)					\
+			DEBUG=$(DEBUG)						\
+			--no-print-directory;					\
+	 fi
+	@printf "%-12s %s\n" "Generating" $@
+	@TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)"					\
+		pandoc $(EXTRAARGS)						\
+		--pdf-engine=xelatex						\
+		--pdf-engine-opt="-shell-escape"				\
+		--from markdown+tex_math_single_backslash			\
+		--from markdown-markdown_in_html_blocks-native_divs		\
+		--from markdown+pipe_tables+table_captions			\
+		-V fontpath="$(TEXFONTPATH)/"					\
+		$(RESOURCEPATH)							\
+		--template=$(TEXTEMPLATE) $($*_mdparts) -o $@ $(OUTPUT)
 
 ### Figures(in TikZ)
 %.pdf: src/%.tikz
