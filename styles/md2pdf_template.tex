@@ -19,6 +19,10 @@ $endif$
 \usepackage{tocloft}
 \setcounter{tocdepth}{1}
 
+$if(figcaption)$
+\captionsetup{justification=$figcaption$, singlelinecheck=false}
+$endif$
+
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$

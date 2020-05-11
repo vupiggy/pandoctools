@@ -28,7 +28,6 @@ type Figure struct {
 
 const latexTemplate = `
 \begin{figure}[{{.Place}}]
-  \centering
   \includegraphics[%
       {{.Options}}]%
       {{"{"}}{{.Path}}{{index .Suffix .Target}}{{"}"}}

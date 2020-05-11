@@ -13,6 +13,7 @@ texpdf:	$(TEXPDFTARGETS)
 ifndef DOCTOOLS
   DOCTOOLS=$(HOME)/Projects/pandoctools
 endif
+DOCTOOLSPATH:=$(abspath $(DOCTOOLS))
 
 ifndef STYLEDIR
   STYLEDIR	=	$(DOCTOOLS)/styles
@@ -38,12 +39,12 @@ HTML5TEMPLATE	=	$(STYLEDIR)/tufte.html5
 HTMLCMDCSS	=	$(foreach css, $(HTMLSTYLES), --css $(css))
 
 clean:
-	@[ -d Figures ] && make -C Figures/ clean DOCTOOLS=$(DOCTOOLS)
+	@[ -d Figures ] && make -C Figures/ CLEAN 
 	@echo "RM pdf html"
-	@rm -f $(PUBDIR)/*.{pdf,html} *.d
+	@rm -f $(PUBDIR)/*.md.{pdf,html} *.d
 
 distclean:
-	@[ -d Figures ] && make -C Figures/ distclean DOCTOOLS=$(DOCTOOLS)
+	@[ -d Figures ] && make -C Figures/ DISTCLEAN 
 	@echo "RM html, pdf, figures and all intermediates"
 	@rm -f $(PUBDIR)/*.{pdf.html} *.aux *.log *.out *.toc *.xwm *.d
 
@@ -110,8 +111,8 @@ $(PUBDIR)/%.md.html: $$($$*_mdparts) $$(LISTINGS) $(HTMLSTYLES) $(FIGURESRC)
 		printf "%-12s %s\n" "Generating" "figurs";			\
 		make -C $(FIGURESDIR) figures 					\
 			TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)" 			\
-			DOCTOOLS=$(DOCTOOLS)					\
 			DEBUG=$(DEBUG)						\
+			DOCTOOLS=$(DOCTOOLSPATH)				\
 			--no-print-directory;					\
 	 fi
 	@printf "%-12s %s\n" "Generating" $@
@@ -136,8 +137,8 @@ $(PUBDIR)/%.md.pdf: $$($$*_mdparts) $$(LISTINGS) $(TEXMDPREAMBLES) $(FIGURESRC)
 		printf "%-12s %s\n" "Generating" "figurs";			\
 		make -C $(FIGURESDIR) figures 					\
 			TEXINPUTS="$(TEXINPUTS):$(STYLEDIR)" 			\
-			DOCTOOLS=$(DOCTOOLS)					\
 			DEBUG=$(DEBUG)						\
+			DOCTOOLS=$(DOCTOOLSPATH)				\
 			--no-print-directory;					\
 	 fi
 	@printf "%-12s %s\n" "Generating" $@
@@ -156,21 +157,19 @@ $(PUBDIR)/%.md.pdf: $$($$*_mdparts) $$(LISTINGS) $(TEXMDPREAMBLES) $(FIGURESRC)
 %.pdf: src/%.tikz
 	@printf "%-12s %s\n" "Tikzing " $<
 	@tikzfile=$<; texfile=$${tikzfile%%.tikz}.tex; tikzfile=`basename $<`;		\
-	 printf "\\\documentclass[tikz, border=10pt]{standalone}\n\n"	>$${texfile};	\
-	 printf "\\\usetikzlibrary{calc,quotes,angles,arrows}\n"	>>$${texfile};	\
-	 printf "\\\usepackage{amsthm}\n"				>>$${texfile};	\
-	 printf "\\\usepackage{tkz-euclide}\n"				>>$${texfile};	\
-	 printf "\\\usetkzobj{all}\n"					>>$${texfile};	\
-	 printf "\\\usepackage[scaled]{helvet}\n"			>>$${texfile};	\
-	 printf "\\\renewcommand{\\\ttdefault}{lmtt}\n"			>>$${texfile};	\
-	 printf "\\\usepackage[T1]{fontenc}\n"				>>$${texfile};	\
-	 printf "\\\usepackage{xcolor}\n"				>>$${texfile};	\
+	 printf "\documentclass[tikz, border=10pt]{standalone}\n\n"	>$${texfile};	\
+	 printf "\usepackage{fontspec}\n"				>>$${texfile};	\
+	 printf "\usepackage{xcolor}\n"					>>$${texfile};	\
+	 printf "\usepackage{tkz-euclide}\n"				>>$${texfile};	\
+	 printf "\usepackage{gensymb}\n"				>>$${texfile};	\
+	 printf "\setsansfont{Helvetica Neue}\n"			>>$${texfile};	\
+	 printf "\\\renewcommand{\\\familydefault}{\\\sfdefault}\n"	>>$${texfile};	\
 	 printf "\\\begin{document}\n"					>>$${texfile};	\
-	 printf "\\\input{$${tikzfile}}\n"				>>$${texfile};	\
+	 printf "\input{$${tikzfile}}\n"				>>$${texfile};	\
 	 printf "\\\end{document}\n\n"					>>$${texfile};	\
 	 TEXINPUTS=$(TEXINPUTS):$(TEXEXTRAINPUTS)					\
 	 lualatex -interaction=nonstopmode -output-directory=./ $${texfile} $(OUTPUT)
 
-%.svg: %.pdf
+$(PUBDIR)/%.svg: %.pdf
 	@printf "%-12s %-20s to SVG\n" "Exporting" "$^"
 	@pdf2svg $< $@
